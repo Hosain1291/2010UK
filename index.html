@@ -1,0 +1,2201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UK General Election 2010 - A Windows 7 Experience</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Windows 7 Aero Glass inspired styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Windows 7 default font stack */
+            background: linear-gradient(to bottom right, #e0e8f0, #c0c8d0); /* Subtle gradient background */
+            color: #333; /* Dark grey text */
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container-win7 {
+            background-color: rgba(240, 240, 240, 0.9); /* Slightly translucent background */
+            border: 1px solid #a0a0a0; /* Soft border */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.6) inset; /* Aero-like shadow */
+            backdrop-filter: blur(5px); /* Simulate frosted glass */
+            -webkit-backdrop-filter: blur(5px); /* For Safari */
+            max-width: 960px; /* Max width for desktop */
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box; /* Include padding in width */
+        }
+        .header-win7 {
+            background: linear-gradient(to bottom, #4a86e8, #3667c4); /* Blue gradient header */
+            color: #ffffff;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            border-bottom: 1px solid #2a55a0;
+            border-radius: 6px 6px 0 0; /* Rounded top corners */
+            margin: -20px -20px 20px -20px; /* Extend to container edges */
+            padding-top: 25px; /* More padding to simulate title bar height */
+            position: relative;
+            z-index: 1;
+        }
+        .section-win7 {
+            background-color: rgba(255, 255, 255, 0.8); /* Lighter, slightly translucent for sections */
+            border: 1px solid #d0d0d0; /* Subtle inset border */
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); /* Inner shadow for depth */
+        }
+        .input-win7 {
+            border: 1px solid #a0a0a0;
+            background-color: #ffffff;
+            padding: 0.4rem 0.75rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            border-radius: 3px;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .input-win7:focus {
+            border-color: #4a86e8;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 0 2px rgba(74, 134, 232, 0.3);
+            outline: none;
+        }
+        .button-win7 {
+            background: linear-gradient(to bottom, #d0d0d0, #c0c0c0);
+            border: 1px solid #a0a0a0;
+            border-radius: 4px;
+            padding: 0.6rem 1.2rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+        }
+        .button-win7:hover {
+            background: linear-gradient(to bottom, #e0e0e0, #d0d0d0);
+            border-color: #808080;
+        }
+        .button-win7:active {
+            background: linear-gradient(to bottom, #b0b0b0, #c0c0c0);
+            border-color: #606060;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        .button-win7.bg-red-400 { /* Specific style for clear button */
+            background: linear-gradient(to bottom, #ff7f7f, #e06060);
+            border-color: #c04040;
+            color: white;
+        }
+        .button-win7.bg-red-400:hover {
+            background: linear-gradient(to bottom, #ff9090, #f07070);
+            border-color: #d05050;
+        }
+        .button-win7.bg-red-400:active {
+            background: linear-gradient(to bottom, #e06060, #ff7f7f);
+            border-color: #b03030;
+        }
+        .link-win7 {
+            color: #0066cc; /* Standard Windows blue link */
+            text-decoration: underline;
+        }
+        .table-win7 {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            border: 1px solid #d0d0d0;
+            border-radius: 4px;
+            overflow: hidden; /* Ensures rounded corners apply to content */
+        }
+        .table-win7 th, .table-win7 td {
+            border: 1px solid #e0e0e0;
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+        }
+        .table-win7 th {
+            background: linear-gradient(to bottom, #e0e0e0, #d0d0d0);
+            font-weight: 600;
+            color: #444;
+        }
+        .table-win7 tbody tr:nth-child(odd) {
+            background-color: rgba(245, 245, 245, 0.8);
+        }
+        .table-win7 tbody tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        .flex-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Range input styling for a more Windows 7 feel */
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(to right, #a0c0e0, #d0e0f0); /* Blue gradient track */
+            border-radius: 4px;
+            outline: none;
+            opacity: 0.9;
+            transition: opacity .2s;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(to bottom, #f0f0f0, #d0d0d0);
+            border: 1px solid #a0a0a0;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            transition: background .2s, border-color .2s, box-shadow .2s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            background: linear-gradient(to bottom, #ffffff, #e0e0e0);
+            border-color: #808080;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:active {
+            background: linear-gradient(to bottom, #c0c0c0, #e0e0e0);
+            border-color: #606060;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        /* Message Box Styles (updated for Win7) */
+        .message-box-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* Darker, slightly translucent overlay */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .message-box {
+            background-color: rgba(240, 240, 240, 0.95);
+            border: 1px solid #a0a0a0;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.7) inset;
+            max-width: 450px;
+            text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+            overflow: hidden; /* For pseudo-element background */
+        }
+        .message-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30px; /* Height of the header bar */
+            background: linear-gradient(to bottom, #4a86e8, #3667c4); /* Blue gradient header */
+            border-radius: 8px 8px 0 0;
+            z-index: -1;
+        }
+        .message-box p {
+            margin-top: 15px; /* Space for the pseudo-element header */
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .message-box-button {
+            background: linear-gradient(to bottom, #d0d0d0, #c0c0c0);
+            border: 1px solid #a0a0a0;
+            border-radius: 4px;
+            padding: 0.6rem 1.2rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+        }
+        .message-box-button:hover {
+            background: linear-gradient(to bottom, #e0e0e0, #d0d0d0);
+            border-color: #808080;
+        }
+        .message-box-button:active {
+            background: linear-gradient(to bottom, #b0b0b0, #c0c0c0);
+            border-color: #606060;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Tab styles */
+        .tab-buttons {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #a0a0a0;
+        }
+        .tab-button {
+            background: linear-gradient(to bottom, #e0e0e0, #d0d0d0);
+            border: 1px solid #a0a0a0;
+            border-bottom: none;
+            border-radius: 6px 6px 0 0;
+            padding: 0.8rem 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-right: 5px;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .tab-button.active {
+            background: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
+            border-color: #a0a0a0;
+            position: relative;
+            z-index: 2;
+            margin-bottom: -1px; /* Overlap border */
+        }
+        .tab-button:hover:not(.active) {
+            background: linear-gradient(to bottom, #f5f5f5, #e5e5e5);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Style for active legislation stance button */
+        .legislation-stance-button.active-stance {
+            background: linear-gradient(to bottom, #6a9de8, #4a86e8); /* A distinct blue */
+            border-color: #3667c4;
+            color: white;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        .legislation-stance-button.active-stance:hover {
+            background: linear-gradient(to bottom, #7ab0f0, #5a96f8);
+            border-color: #4677d4;
+        }
+        .legislation-stance-button.active-stance:active {
+            background: linear-gradient(to bottom, #4a86e8, #6a9de8);
+            border-color: #2657b4;
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container-win7 {
+                margin: 10px;
+                padding: 15px;
+            }
+            .header-win7 {
+                font-size: 1.5rem;
+                margin: -15px -15px 15px -15px;
+            }
+            .section-win7 {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+            .tab-button {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body class="p-4">
+    <div class="container-win7 mx-auto p-6 rounded-lg">
+        <div class="header-win7 mb-6 rounded-md">
+            <h1>UK General Election 2010</h1>
+            <p class="text-sm">A Retro Political Simulator</p>
+        </div>
+
+        <!-- Tab Buttons -->
+        <div class="tab-buttons">
+            <button class="tab-button active" data-tab="simulator">Simulator</button>
+            <button class="tab-button" data-tab="legislation">Legislation</button>
+            <button class="tab-button" data-tab="newsfeed">News Feed</button>
+        </div>
+
+        <!-- Simulator Tab Content -->
+        <div id="tab-content-simulator" class="tab-content active">
+            <!-- Voteshare Simulator -->
+            <div class="section-win7 mb-6 rounded-md">
+                <h2 class="text-xl font-bold mb-4">Interactive Voteshare Simulator</h2>
+                <p class="mb-4">Adjust the vote share percentages below to see the projected seat distribution. Total seats: 650. Majority needed: 326.</p>
+
+                <div class="mb-4">
+                    <label for="historical-select" class="block mb-2">Select Historical Results:</label>
+                    <select id="historical-select" class="input-win7 w-full">
+                        <option value="2010">2010 (Default)</option>
+                        <option value="2005">2005 General Election</option>
+                        <option value="2001">2001 General Election</option>
+                        <option value="1997">1997 General Election</option>
+                        <option value="1992">1992 General Election</option>
+                        <option value="1987">1987 General Election</option>
+                    </select>
+                </div>
+
+                <div id="voteshare-inputs" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                    <!-- Inputs will be dynamically generated here -->
+                </div>
+
+                <div class="mb-4">
+                    <p class="font-bold">Total Vote Share: <span id="total-vote-share">0%</span></p>
+                    <p class="text-sm text-red-700" id="vote-share-warning"></p>
+                </div>
+
+                <h3 class="text-lg font-bold mb-2">Projected Seats:</h3>
+                <div id="projected-seats" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Projected seats will be displayed here -->
+                </div>
+            </div>
+
+            <!-- Coalition Builder -->
+            <div class="section-win7 mb-6 rounded-md">
+                <h2 class="text-xl font-bold mb-4">Coalition Builder</h2>
+                <p class="mb-4">Select parties to form a potential coalition government. A majority requires 326 seats.</p>
+                <div id="coalition-options" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
+                    <!-- Coalition checkboxes will be dynamically generated here -->
+                </div>
+                <div class="font-bold">
+                    Total Coalition Seats: <span id="coalition-total-seats">0</span>
+                </div>
+                <div id="coalition-status" class="mt-2 text-lg">
+                    <!-- Coalition status message -->
+                </div>
+            </div>
+
+            <!-- Predicted Coalition Cabinet Section (New) -->
+            <div id="coalition-cabinet-section" class="section-win7 rounded-md hidden">
+                <h2 class="text-xl font-bold mb-4">Predicted Coalition Cabinet</h2>
+                <button id="coalition-cabinet-toggle-button" class="button-win7 mb-4">Show Cabinet</button>
+                <div id="coalition-cabinet-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 hidden">
+                    <!-- Predicted cabinet members will be listed here -->
+                </div>
+            </div>
+
+            <!-- Declaration Scoreboard -->
+            <div class="section-win7 rounded-md">
+                <h2 class="text-xl font-bold mb-4">Declaration Scoreboard</h2>
+                <p class="mb-4">Manually enter constituency results as they come in. (Total Constituencies: 650)</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="constituency-name" class="block mb-1">Constituency Name:</label>
+                        <input type="text" id="constituency-name" class="input-win7 w-full" placeholder="e.g., Witney">
+                    </div>
+                    <div>
+                        <label for="winning-party" class="block mb-1">Winning Party:</label>
+                        <select id="winning-party" class="input-win7 w-full">
+                            <option value="">Select Party</option>
+                            <option value="Conservative">Conservative</option>
+                            <option value="Labour">Labour</option>
+                            <option value="Liberal Democrats">Liberal Democrats</option>
+                            <option value="SNP">SNP</option>
+                            <option value="Plaid Cymru">Plaid Cymru</option>
+                            <option value="Green">Green</option>
+                            <option value="DUP">DUP</option>
+                            <option value="Sinn Fein">Sinn Fein</option>
+                            <option value="SDLP">SDLP</option>
+                            <option value="Alliance">Alliance</option>
+                            <option value="UUP">UUP</option>
+                            <option value="UKIP">UKIP</option>
+                            <option value="Referendum Party">Referendum Party</option>
+                            <option value="Natural Law Party">Natural Law Party</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="winning-votes" class="block mb-1">Winning Party Votes:</label>
+                        <input type="number" id="winning-votes" class="input-win7 w-full" min="0" value="0">
+                    </div>
+                    <div>
+                        <label for="turnout" class="block mb-1">Turnout:</label>
+                        <input type="number" id="turnout" class="input-win7 w-full" min="0" value="0">
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row gap-4 mb-6">
+                    <button id="add-declaration-btn" class="button-win7 flex-grow">Add Declaration</button>
+                    <button id="clear-declarations-btn" class="button-win7 flex-grow bg-red-400">Clear All Declarations</button>
+                </div>
+
+
+                <h3 class="text-lg font-bold mb-2">Current Declaration Tally:</h3>
+                <div id="declared-seats-summary" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                    <!-- Declared seat summary will be here -->
+                </div>
+
+                <h3 class="text-lg font-bold mb-2">Declared Constituencies:</h3>
+                <div id="declared-constituencies-list" class="max-h-64 overflow-y-auto border border-gray-500 p-2 bg-white">
+                    <p id="no-declarations-message" class="text-gray-600">No declarations yet.</p>
+                    <!-- Declared constituencies will be listed here -->
+                </div>
+            </div>
+
+            <!-- MPs at Risk Section -->
+            <div class="section-win7 rounded-md">
+                <h2 class="text-xl font-bold mb-4">MPs at Risk (Marginal Seats)</h2>
+                <p class="mb-4">These are constituencies where the winning MP had a small majority, making them vulnerable to a swing in the next election.</p>
+                <div id="mps-at-risk-list" class="max-h-96 overflow-y-auto border border-gray-500 p-2 bg-white">
+                    <p id="no-mps-at-risk-message" class="text-gray-600">Select an election year to see MPs at risk.</p>
+                    <!-- MPs at risk will be listed here -->
+                </div>
+            </div>
+
+            <!-- Cabinet Section (New) -->
+            <div id="cabinet-section" class="section-win7 rounded-md hidden">
+                <h2 class="text-xl font-bold mb-4">Cabinet After Election</h2>
+                <!-- New reshuffle button -->
+                <button id="reshuffle-cabinet-toggle-button" class="button-win7 mb-4 mr-2 hidden">Reshuffle Cabinet</button>
+                <button id="betray-pm-button" class="button-win7 mb-4 hidden">Betray Prime Minister</button>
+                <div id="cabinet-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Cabinet members will be listed here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Legislation Tab Content -->
+        <div id="tab-content-legislation" class="tab-content">
+            <div class="section-win7 rounded-md">
+                <h2 class="text-xl font-bold mb-4">Legislation & Policy Challenges</h2>
+                <p class="mb-4" id="legislation-intro-text">Explore key legislative issues and propose a stance. Will your cabinet agree?</p>
+
+                <div id="legislation-content">
+                    <!-- Legislation details will be dynamically loaded here -->
+                    <p class="text-gray-600">Select a historical election year to view legislation challenges.</p>
+                </div>
+
+                <div id="legislation-actions" class="mt-6 hidden">
+                    <h3 class="text-lg font-bold mb-2">Propose Your Stance:</h3>
+                    <div class="flex flex-wrap gap-3 mb-4">
+                        <button class="button-win7 legislation-stance-button" data-stance="Support">Support</button>
+                        <button class="button-win7 legislation-stance-button" data-stance="Oppose">Oppose</button>
+                        <button class="button-win7 legislation-stance-button" data-stance="Amend">Amend</button>
+                        <button class="button-win7 legislation-stance-button" data-stance="Delay">Delay</button>
+                    </div>
+                    <button id="propose-stance-btn" class="button-win7">Propose Stance to Cabinet</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- News Feed Tab Content -->
+        <div id="tab-content-newsfeed" class="tab-content">
+            <div class="section-win7 rounded-md">
+                <h2 class="text-xl font-bold mb-4">Historical News Feed</h2>
+                <p class="mb-4" id="newsfeed-intro-text">Catch up on the major headlines and governmental actions of the time.</p>
+
+                <div id="newsfeed-week-navigation" class="flex justify-between items-center mb-4 hidden">
+                    <button id="prev-week-btn" class="button-win7">&lt; Previous Week</button>
+                    <span id="current-week-display" class="font-bold">Week 1</span>
+                    <button id="next-week-btn" class="button-win7">Next Week &gt;</button>
+                </div>
+
+                <div id="newsfeed-content">
+                    <!-- News items will be dynamically loaded here -->
+                    <p class="text-gray-600">Select a historical election year to view news headlines.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Custom Message Box HTML -->
+    <div id="message-box-overlay" class="message-box-overlay hidden">
+        <div class="message-box rounded-lg">
+            <p id="message-box-text" class="mb-4"></p>
+            <button id="message-box-ok-button" class="message-box-button">OK</button>
+        </div>
+    </div>
+
+    <script>
+        // Historical election results data (Vote Share and Seats)
+        const historicalData = {
+            '2010': {
+                name: '2010 General Election (Default)',
+                totalSeats: 650,
+                majorityNeeded: 326,
+                parties: {
+                    'Conservative': { voteShare: 36.1, seats: 286 },
+                    'Labour': { voteShare: 29.0, seats: 275 },
+                    'Liberal Democrats': { voteShare: 23.0, seats: 60 },
+                    'SNP': { voteShare: 1.7, seats: 6 },
+                    'Plaid Cymru': { voteShare: 0.6, seats: 3 },
+                    'Green': { voteShare: 0.9, seats: 1 },
+                    'DUP': { voteShare: 0.6, seats: 8 },
+                    'Sinn Fein': { voteShare: 0.6, seats: 5 },
+                    'SDLP': { voteShare: 0.4, seats: 3 },
+                    'Alliance': { voteShare: 0.1, seats: 1 },
+                    'UUP': { voteShare: 0.0, seats: 0 },
+                    'UKIP': { voteShare: 3.1, seats: 0 },
+                    'Other': { voteShare: 3.9, seats: 2 }
+                }
+            },
+            '2005': {
+                name: '2005 General Election',
+                totalSeats: 646,
+                majorityNeeded: 324,
+                parties: {
+                    'Labour': { voteShare: 35.2, seats: 355 },
+                    'Conservative': { voteShare: 32.4, seats: 198 },
+                    'Liberal Democrats': { voteShare: 22.0, seats: 62 },
+                    'SNP': { voteShare: 1.5, seats: 6 },
+                    'Plaid Cymru': { voteShare: 0.6, seats: 3 },
+                    'Green': { voteShare: 1.0, seats: 1 },
+                    'DUP': { voteShare: 0.9, seats: 9 },
+                    'Sinn Fein': { voteShare: 0.6, seats: 5 },
+                    'SDLP': { voteShare: 0.5, seats: 3 },
+                    'Alliance': { voteShare: 0.1, seats: 0 },
+                    'UUP': { voteShare: 0.5, seats: 1 },
+                    'UKIP': { voteShare: 2.1, seats: 0 },
+                    'Other': { voteShare: 2.6, seats: 3 }
+                }
+            },
+            '2001': {
+                name: '2001 General Election',
+                totalSeats: 659,
+                majorityNeeded: 330,
+                parties: {
+                    'Labour': { voteShare: 40.7, seats: 412 },
+                    'Conservative': { voteShare: 31.7, seats: 166 },
+                    'Liberal Democrats': { voteShare: 18.3, seats: 52 },
+                    'SNP': { voteShare: 1.8, seats: 5 },
+                    'Plaid Cymru': { voteShare: 0.3, seats: 4 },
+                    'Green': { voteShare: 0.6, seats: 0 },
+                    'DUP': { voteShare: 0.4, seats: 5 },
+                    'Sinn Fein': { voteShare: 0.2, seats: 4 },
+                    'SDLP': { voteShare: 0.2, seats: 3 },
+                    'Alliance': { voteShare: 0.1, seats: 0 },
+                    'UUP': { voteShare: 0.5, seats: 6 },
+                    'UKIP': { voteShare: 1.5, seats: 0 },
+                    'Other': { voteShare: 0.7, seats: 2 }
+                }
+            },
+            '1997': {
+                name: '1997 General Election',
+                totalSeats: 659,
+                majorityNeeded: 330,
+                parties: {
+                    'Labour': { voteShare: 43.2, seats: 418 },
+                    'Conservative': { voteShare: 30.7, seats: 165 },
+                    'Liberal Democrats': { voteShare: 16.8, seats: 46 },
+                    'SNP': { voteShare: 1.9, seats: 6 },
+                    'Plaid Cymru': { voteShare: 0.3, seats: 4 },
+                    'Green': { voteShare: 0.1, seats: 0 },
+                    'DUP': { voteShare: 0.3, seats: 2 },
+                    'Sinn Fein': { voteShare: 0.2, seats: 2 },
+                    'SDLP': { voteShare: 0.2, seats: 3 },
+                    'Alliance': { voteShare: 0.1, seats: 0 },
+                    'UUP': { voteShare: 0.8, seats: 10 },
+                    'Referendum Party': { voteShare: 2.6, seats: 0 },
+                    'Other': { voteShare: 2.8, seats: 3 }
+                }
+            },
+            '1992': {
+                name: '1992 General Election',
+                totalSeats: 651,
+                majorityNeeded: 326,
+                parties: {
+                    'Conservative': { voteShare: 41.9, seats: 336 },
+                    'Labour': { voteShare: 34.4, seats: 271 },
+                    'Liberal Democrats': { voteShare: 17.8, seats: 20 },
+                    'SNP': { voteShare: 1.9, seats: 3 },
+                    'Plaid Cymru': { voteShare: 0.5, seats: 4 },
+                    'Green': { voteShare: 0.5, seats: 0 },
+                    'DUP': { voteShare: 0.3, seats: 3 },
+                    'Sinn Fein': { voteShare: 0.2, seats: 0 },
+                    'SDLP': { voteShare: 0.5, seats: 4 },
+                    'Alliance': { voteShare: 0.2, seats: 0 },
+                    'UUP': { voteShare: 0.8, seats: 9 },
+                    'Natural Law Party': { voteShare: 0.3, seats: 0 },
+                    'Other': { voteShare: 0.7, seats: 1 }
+                }
+            },
+            '1987': {
+                name: '1987 General Election',
+                totalSeats: 650,
+                majorityNeeded: 326,
+                parties: {
+                    'Conservative': { voteShare: 42.2, seats: 376 },
+                    'Labour': { voteShare: 30.8, seats: 229 },
+                    'Liberal/SDP Alliance': { voteShare: 22.6, seats: 22 },
+                    'SNP': { voteShare: 1.3, seats: 3 },
+                    'Plaid Cymru': { voteShare: 0.4, seats: 3 },
+                    'Green': { voteShare: 0.3, seats: 0 },
+                    'DUP': { voteShare: 0.3, seats: 3 },
+                    'Sinn Fein': { voteShare: 0.3, seats: 1 },
+                    'SDLP': { voteShare: 0.5, seats: 3 },
+                    'UUP': { voteShare: 0.8, seats: 9 },
+                    'Other': { voteShare: 0.7, seats: 1 }
+                }
+            }
+        };
+
+        // Data for MPs at Risk (Marginal Seats)
+        const marginalSeatsData = {
+            '2010': [
+                { constituency: 'Fermanagh and South Tyrone', mp: 'Michelle Gildernew', party: 'Sinn Féin', majority: '4 votes', swingNeeded: '0.0%' },
+                { constituency: 'Hampstead and Kilburn', mp: 'Glenda Jackson', party: 'Labour', majority: '42 votes', swingNeeded: '0.05%' },
+                { constituency: 'North Warwickshire', mp: 'Daniel Byles', party: 'Conservative', majority: '54 votes', swingNeeded: '0.1%' },
+                { constituency: 'Camborne and Redruth', mp: 'George Eustice', party: 'Conservative', majority: '66 votes', swingNeeded: '0.2%' },
+                { constituency: 'Bolton West', mp: 'Julie Hilling', party: 'Labour', majority: '92 votes', swingNeeded: '0.2%' },
+                { constituency: 'Thurrock', mp: 'Jackie Doyle-Price', party: 'Conservative', majority: '92 votes', swingNeeded: '0.2%' },
+                { constituency: 'Hendon', mp: 'Matthew Offord', party: 'Conservative', majority: '106 votes', swingNeeded: '0.2%' },
+                { constituency: 'Sheffield Central', mp: 'Paul Blomfield', party: 'Labour', majority: '165 votes', swingNeeded: '0.4%' },
+                { constituency: 'Solihull', mp: 'Lorely Burt', party: 'Liberal Democrats', majority: '175 votes', swingNeeded: '0.3%' },
+                { constituency: 'Oxford West and Abingdon', mp: 'Nicola Blackwood', party: 'Conservative', majority: '176 votes', swingNeeded: '0.3%' }
+            ],
+            '2005': [
+                { constituency: 'Blaenau Gwent', mp: 'Peter Law', party: 'Independent', majority: '9,121 votes', swingNeeded: '10.0%' },
+                { constituency: 'Ceredigion', mp: 'Mark Williams', party: 'Liberal Democrats', majority: '3,466 votes', swingNeeded: '4.0%' },
+                { constituency: 'Cardiff Central', mp: 'Jenny Willott', party: 'Liberal Democrats', majority: '8,416 votes', swingNeeded: '9.0%' },
+                { constituency: 'Bethnal Green and Bow', mp: 'George Galloway', party: 'Respect', majority: '823 votes', swingNeeded: '1.0%' },
+                { constituency: 'Dudley South', mp: 'Ian Pearson', party: 'Labour', majority: '1,322 votes', swingNeeded: '3.0%' }
+            ],
+            '2001': [
+                { constituency: 'Wyre Forest', mp: 'Richard Taylor', party: 'Health Concern', majority: '17,634 votes', swingNeeded: '20.0%' },
+                { constituency: 'Tatton', mp: 'George Osborne', party: 'Conservative', majority: '8,611 votes', swingNeeded: '10.0%' },
+                { constituency: 'Romsey', mp: 'Sandra Gidley', party: 'Liberal Democrats', majority: '2,156 votes', swingNeeded: '2.5%' },
+                { constituency: 'North Down', mp: 'Lady Sylvia Hermon', party: 'UUP', majority: '7,324 votes', swingNeeded: '8.0%' },
+                { constituency: 'Eastwood', mp: 'Jim Murphy', party: 'Labour', majority: '9,141 votes', swingNeeded: '10.0%' }
+            ],
+            '1997': [
+                { constituency: 'Cardiff North', mp: 'Julie Morgan', party: 'Labour', majority: '2,458 votes', swingNeeded: '2.7%' },
+                { constituency: 'Enfield Southgate', mp: 'Stephen Twigg', party: 'Labour', majority: '1,431 votes', swingNeeded: '1.6%' },
+                { constituency: 'Dover', mp: 'Gwyn Prosser', party: 'Labour', majority: '1,669 votes', swingNeeded: '1.8%' },
+                { constituency: 'Richmond Park', mp: 'Jenny Tonge', party: 'Liberal Democrats', majority: '2,951 votes', swingNeeded: '3.2%' },
+                { constituency: 'Aberdeen South', mp: 'Anne Begg', party: 'Labour', majority: '3,365 votes', swingNeeded: '3.7%' }
+            ],
+            '1992': [
+                { constituency: 'Belfast West', mp: 'Joe Hendron', party: 'SDLP', majority: '589 votes', swingNeeded: '0.7%' },
+                { constituency: 'Monmouth', mp: 'Roger Evans', party: 'Conservative', majority: '3,200 votes', swingNeeded: '3.5%' },
+                { constituency: 'Cambridge', mp: 'Anne Campbell', party: 'Labour', majority: '580 votes', swingNeeded: '0.6%' },
+                { constituency: 'Bath', mp: 'Don Foster', party: 'Liberal Democrats', majority: '3,768 votes', swingNeeded: '4.0%' },
+                { constituency: 'East Antrim', mp: 'Roy Beggs', party: 'UUP', majority: '7,422 votes', swingNeeded: '8.0%' }
+            ],
+            '1987': [
+                { constituency: 'Dewsbury', mp: 'Ann Taylor', party: 'Labour', majority: '1,643 votes', swingNeeded: '1.8%' },
+                { constituency: 'Bolton North East', mp: 'Peter Thurnham', party: 'Conservative', majority: '1,007 votes', swingNeeded: '1.1%' },
+                { constituency: 'Strathkelvin and Bearsden', mp: 'Sam Galbraith', party: 'Labour', majority: '1,321 votes', swingNeeded: '1.5%' },
+                { constituency: 'Montgomery', mp: 'Alex Carlile', party: 'Liberal/SDP Alliance', majority: '2,576 votes', swingNeeded: '2.9%' },
+                { constituency: 'Glasgow Central', mp: 'Bob McTaggart', party: 'Labour', majority: '2,056 votes', swingNeeded: '2.3%' }
+            ]
+        };
+
+        // Data for Cabinet Members (Expanded)
+        const cabinetData = {
+            '2005': {
+                'Prime Minister': 'Tony Blair (Labour)',
+                'Deputy Prime Minister': 'John Prescott (Labour)',
+                'Chancellor of the Exchequer': 'Gordon Brown (Labour)',
+                'Secretary of State for Foreign and Commonwealth Affairs': 'Jack Straw (Labour)',
+                'Secretary of State for the Home Department': 'Charles Clarke (Labour)',
+                'Secretary of State for Defence': 'John Reid (Labour)',
+                'Secretary of State for Health': 'Patricia Hewitt (Labour)',
+                'Secretary of State for Environment, Food and Rural Affairs': 'Margaret Beckett (Labour)',
+                'Secretary of State for Transport and Scotland': 'Alistair Darling (Labour)',
+                'Secretary of State for Work and Pensions': 'David Blunkett (Labour)',
+                'Secretary of State for Education and Skills': 'Ruth Kelly (Labour)',
+                'Secretary of State for Trade and Industry': 'Alan Johnson (Labour)',
+                'Secretary of State for Northern Ireland and Wales': 'Peter Hain (Labour)',
+                'Secretary of State for International Development': 'Hilary Benn (Labour)',
+                'Secretary of State for Culture, Media and Sport': 'Tessa Jowell (Labour)',
+                'Lord Chancellor': 'Lord Falconer of Thoroton (Labour)',
+                'Leader of the House of Commons': 'Geoff Hoon (Labour)',
+                'Leader of the House of Lords': 'Baroness Amos (Labour)',
+                'Chief Secretary to the Treasury': 'Desmond Browne (Labour)',
+                'Chancellor of the Duchy of Lancaster': 'John Hutton (Labour)'
+            },
+            '2001': {
+                'Prime Minister': 'Tony Blair (Labour)',
+                'Deputy Prime Minister': 'John Prescott (Labour)',
+                'Chancellor of the Exchequer': 'Gordon Brown (Labour)',
+                'Secretary of State for Foreign and Commonwealth Affairs': 'Jack Straw (Labour)',
+                'Secretary of State for the Home Department': 'David Blunkett (Labour)',
+                'Secretary of State for Defence': 'Geoff Hoon (Labour)',
+                'Secretary of State for Health': 'Alan Milburn (Labour)',
+                'Secretary of State for Environment, Food and Rural Affairs': 'Margaret Beckett (Labour)',
+                'Secretary of State for Transport, Local Government and the Regions': 'Stephen Byers (Labour)',
+                'Secretary of State for Work and Pensions': 'Alistair Darling (Labour)',
+                'Secretary of State for for Education and Skills': 'Estelle Morris (Labour)',
+                'Secretary of State for Trade and Industry': 'Patricia Hewitt (Labour)',
+                'Secretary of State for International Development': 'Clare Short (Labour)',
+                'Secretary of State for Culture, Media and Sport': 'Tessa Jowell (Labour)',
+                'Secretary of State for Northern Ireland': 'John Reid (Labour)',
+                'Secretary of State for Scotland': 'Helen Liddell (Labour)',
+                'Secretary of State for Wales': 'Paul Murphy (Labour)',
+                'Lord Chancellor': 'Lord Irvine of Lairg (Labour)',
+                'Lord President of the Council (Leader of the House of Commons)': 'Robin Cook (Labour)',
+                'Lord Privy Seal (Leader of the House of Lords)': 'Lord Williams of Mostyn (Labour)',
+                'Chief Secretary to the Treasury': 'Andrew Smith (Labour)',
+                'Minister without Portfolio (Chairman of the Labour Party)': 'Charles Clarke (Labour)'
+            },
+            '1997': {
+                'Prime Minister': 'Tony Blair (Labour)',
+                'Deputy Prime Minister and Secretary of State for the Environment, Transport and the Regions': 'John Prescott (Labour)',
+                'Chancellor of the Exchequer': 'Gordon Brown (Labour)',
+                'Secretary of State for Foreign and Commonwealth Affairs': 'Robin Cook (Labour)',
+                'Secretary of State for the Home Department': 'Jack Straw (Labour)',
+                'Lord Chancellor': 'Lord Irvine of Lairg (Labour)',
+                'President of the Board of Trade (Secretary of State for Trade and Industry)': 'Margaret Beckett (Labour)',
+                'Secretary of State for Defence': 'George Robertson (Labour)',
+                'Secretary of State for Health': 'Frank Dobson (Labour)',
+                'Secretary of State for Social Security': 'Harriet Harman (Labour)',
+                'Secretary of State for Education and Employment': 'David Blunkett (Labour)',
+                'Minister of Agriculture, Fisheries and Food': 'Jack Cunningham (Labour)',
+                'Secretary of State for Scotland': 'Donald Dewar (Labour)',
+                'Secretary of State for Wales': 'Ron Davies (Labour)',
+                'Secretary of State for Northern Ireland': 'Mo Mowlam (Labour)',
+                'Secretary of State for International Development': 'Clare Short (Labour)',
+                'Secretary of State for Culture, Media and Sport': 'Chris Smith (Labour)',
+                'Leader of the House of Commons': 'Ann Taylor (Labour)',
+                'Leader of the House of Lords': 'Lord Richard (Labour)',
+                'Chief Secretary to the Treasury': 'Alistair Darling (Labour)',
+                'Chancellor of the Duchy of Lancaster': 'David Clark (Labour)',
+                'Minister without Portfolio': 'Peter Mandelson (Labour)'
+            },
+            '1992': {
+                'Prime Minister': 'John Major (Conservative)',
+                'Lord Chancellor': 'Lord Mackay of Clashfern (Conservative)',
+                'Secretary of State for Foreign and Commonwealth Affairs': 'Douglas Hurd (Conservative)',
+                'Chancellor of the Exchequer': 'Norman Lamont (Conservative)',
+                'Secretary of State for the Home Department': 'Kenneth Clarke (Conservative)',
+                'Secretary of State for Trade and Industry and President of the Board of Trade': 'Michael Heseltine (Conservative)',
+                'Secretary of State for Defence': 'Malcolm Rifkind (Conservative)',
+                'Lord President of the Council and Leader of the House of Commons': 'Tony Newton (Conservative)',
+                'Secretary of State for the Environment': 'Michael Howard (Conservative)',
+                'Secretary of State for National Heritage': 'David Mellor (Conservative)',
+                'Secretary of State for Transport': 'John MacGregor (Conservative)',
+                'Secretary of State for Social Security': 'Peter Lilley (Conservative)',
+                'Chancellor of the Duchy of Lancaster': 'William Waldegrave (Conservative)',
+                'Secretary of State for Employment': 'Gillian Shephard (Conservative)',
+                'Secretary of State for Health': 'Virginia Bottomley (Conservative)',
+                'Secretary of State for Education': 'John Patten (Conservative)',
+                'Secretary of State for Scotland': 'Ian Lang (Conservative)',
+                'Secretary of State for Wales': 'David Hunt (Conservative)',
+                'Secretary of State for Northern Ireland': 'Sir Patrick Mayhew (Conservative)',
+                'Chief Secretary to the Treasury': 'Michael Portillo (Conservative)',
+                'Minister of Agriculture, Fisheries and Food': 'John Gummer (Conservative)',
+                'Lord Privy Seal and Leader of the House of Lords': 'Lord Wakeham (Conservative)'
+            },
+            '1987': {
+                'Prime Minister': 'Margaret Thatcher (Conservative)',
+                'Deputy Prime Minister': 'William Whitelaw (Conservative)',
+                'Chancellor of the Exchequer': 'Nigel Lawson (Conservative)',
+                'Secretary of State for Foreign and Commonwealth Affairs': 'Sir Geoffrey Howe (Conservative)',
+                'Secretary of State for the Home Department': 'Douglas Hurd (Conservative)',
+                'Lord Chancellor': 'Lord Havers (Conservative)',
+                'Lord President of the Council and Leader of the House of Commons': 'John Wakeham (Conservative)',
+                'Lord Privy Seal and Leader of the House of Lords': 'Viscount Whitelaw (Conservative)',
+                'Secretary of State for Defence': 'George Younger (Conservative)',
+                'Secretary of State for Health and Social Services': 'John Moore (Conservative)',
+                'Secretary of State for Education and Science': 'Kenneth Baker (Conservative)',
+                'Secretary of State for Employment': 'Norman Fowler (Conservative)',
+                'Secretary of State for Energy': 'Cecil Parkinson (Conservative)',
+                'Secretary of State for the Environment': 'Nicholas Ridley (Conservative)',
+                'Minister of Agriculture, Fisheries and Food': 'John MacGregor (Conservative)',
+                'Secretary of State for Trade and Industry and President of the Board of Trade': 'Lord Young of Graffham (Conservative)',
+                'Secretary of State for Transport': 'Paul Channon (Conservative)',
+                'Secretary of State for Scotland': 'Malcolm Rifkind (Conservative)',
+                'Secretary of State for Wales': 'Peter Walker (Conservative)',
+                'Secretary of State for Northern Ireland': 'Tom King (Conservative)',
+                'Chief Secretary to the Treasury': 'John Major (Conservative)',
+                'Chancellor of the Duchy of Lancaster': 'Tony Newton (Conservative)'
+            }
+        };
+
+        // Data for prominent MPs for cabinet prediction
+        const prominentMPsData = {
+            '2010': {
+                'Conservative': ['David Cameron', 'George Osborne', 'William Hague', 'Theresa May', 'Philip Hammond', 'Andrew Lansley', 'Michael Gove', 'Iain Duncan Smith', 'Chris Grayling', 'Ken Clarke'],
+                'Labour': ['Gordon Brown', 'Ed Miliband', 'Alan Johnson', 'Harriet Harman', 'Yvette Cooper', 'Alistair Darling', 'David Miliband', 'Andy Burnham', 'Douglas Alexander', 'John Denham'],
+                'Liberal Democrats': ['Nick Clegg', 'Vince Cable', 'Chris Huhne', 'Danny Alexander', 'David Laws', 'Jeremy Browne', 'Sarah Teather'],
+                'SNP': ['Alex Salmond', 'Angus Robertson'],
+                'Plaid Cymru': ['Elfyn Llwyd'],
+                'Green': ['Caroline Lucas'],
+                'DUP': ['Peter Robinson', 'Nigel Dodds'],
+                'Sinn Fein': ['Gerry Adams'],
+                'SDLP': ['Mark Durkan'],
+                'Alliance': ['Naomi Long'],
+                'UUP': ['Tom Elliott'],
+                'UKIP': ['Nigel Farage'], // Though unlikely for cabinet, included for completeness
+                'Other': ['An Independent MP'] // Generic for 'Other' category
+            },
+            '2005': {
+                'Labour': ['Tony Blair', 'John Prescott', 'Gordon Brown', 'Jack Straw', 'Charles Clarke', 'John Reid', 'Patricia Hewitt', 'Margaret Beckett', 'Alistair Darling', 'David Blunkett', 'Ruth Kelly', 'Alan Johnson', 'Peter Hain', 'Hilary Benn', 'Tessa Jowell', 'Hazel Blears', 'John Hutton', 'Douglas Alexander', 'David Miliband'],
+                'Conservative': ['Michael Howard', 'David Cameron', 'George Osborne', 'Theresa May', 'William Hague', 'Liam Fox', 'Malcolm Rifkind', 'Andrew Lansley'],
+                'Liberal Democrats': ['Charles Kennedy', 'Menzies Campbell', 'Vince Cable', 'Chris Huhne', 'Danny Alexander', 'Nick Clegg'],
+                'SNP': ['Alex Salmond', 'Angus Robertson'],
+                'Plaid Cymru': ['Elfyn Llwyd'],
+                'Green': ['Caroline Lucas'],
+                'DUP': ['Ian Paisley', 'Peter Robinson', 'Nigel Dodds'],
+                'Sinn Fein': ['Gerry Adams', 'Martin McGuinness'],
+                'SDLP': ['Mark Durkan', 'Alasdair McDonnell'],
+                'UUP': ['David Trimble', 'Sylvia Hermon'],
+                'UKIP': ['Roger Knapman', 'Nigel Farage'],
+                'Other': ['George Galloway (Respect)', 'Peter Law (Independent)']
+            },
+            '2001': {
+                'Labour': ['Tony Blair', 'John Prescott', 'Gordon Brown', 'Jack Straw', 'David Blunkett', 'Geoff Hoon', 'Alan Milburn', 'Margaret Beckett', 'Stephen Byers', 'Alistair Darling', 'Estelle Morris', 'Patricia Hewitt', 'Clare Short', 'Tessa Jowell', 'John Reid', 'Helen Liddell', 'Paul Murphy', 'Charles Clarke', 'Andrew Smith', 'Robin Cook'],
+                'Conservative': ['Iain Duncan Smith', 'Michael Howard', 'Oliver Letwin', 'David Davis', 'George Osborne', 'Theresa May', 'Liam Fox', 'Malcolm Rifkind'],
+                'Liberal Democrats': ['Charles Kennedy', 'Menzies Campbell', 'Vince Cable', 'Simon Hughes', 'Alan Beith'],
+                'SNP': ['Alex Salmond', 'John Swinney', 'Angus Robertson'],
+                'Plaid Cymru': ['Dafydd Wigley', 'Elfyn Llwyd', 'Adam Price'],
+                'DUP': ['Ian Paisley', 'Peter Robinson', 'Nigel Dodds'],
+                'Sinn Fein': ['Gerry Adams', 'Martin McGuinness'],
+                'SDLP': ['John Hume', 'Mark Durkan', 'Eddie McGrady'],
+                'UUP': ['David Trimble', 'Jeffrey Donaldson', 'Sylvia Hermon'],
+                'UKIP': ['Jeffrey Titford', 'Nigel Farage'],
+                'Other': ['Richard Taylor (Health Concern)', 'Martin Bell (Independent)']
+            },
+            '1997': {
+                'Labour': ['Tony Blair', 'John Prescott', 'Gordon Brown', 'Robin Cook', 'Jack Straw', 'Margaret Beckett', 'George Robertson', 'Frank Dobson', 'Harriet Harman', 'David Blunkett', 'Jack Cunningham', 'Donald Dewar', 'Ron Davies', 'Mo Mowlam', 'Clare Short', 'Chris Smith', 'Alistair Darling', 'Peter Mandelson', 'Ann Taylor', 'Lord Richard'],
+                'Conservative': ['John Major', 'William Hague', 'Kenneth Clarke', 'Michael Howard', 'Malcolm Rifkind', 'Michael Heseltine', 'Gillian Shephard', 'Stephen Dorrell', 'Brian Mawhinney'],
+                'Liberal Democrats': ['Paddy Ashdown', 'Charles Kennedy', 'Menzies Campbell', 'Alan Beith', 'Simon Hughes', 'Jenny Tonge'],
+                'SNP': ['Alex Salmond', 'John Swinney', 'Margaret Ewing'],
+                'Plaid Cymru': ['Dafydd Wigley', 'Elfyn Llwyd'],
+                'DUP': ['Ian Paisley', 'Peter Robinson'],
+                'Sinn Fein': ['Gerry Adams', 'Martin McGuinness'],
+                'SDLP': ['John Hume', 'Seamus Mallon'],
+                'UUP': ['David Trimble', 'Jeffrey Donaldson', 'Ken Maginnis'],
+                'Referendum Party': ['Sir James Goldsmith'],
+                'Other': ['Martin Bell (Independent)']
+            },
+            '1992': {
+                'Conservative': ['John Major', 'Norman Lamont', 'Douglas Hurd', 'Kenneth Clarke', 'Michael Heseltine', 'Malcolm Rifkind', 'Tony Newton', 'Michael Howard', 'David Mellor', 'John MacGregor', 'Peter Lilley', 'William Waldegrave', 'Gillian Shephard', 'Virginia Bottomley', 'John Patten', 'Ian Lang', 'David Hunt', 'Sir Patrick Mayhew', 'Michael Portillo', 'John Gummer', 'Chris Patten', 'David Mellor', 'John Redwood'], // Added John Redwood
+                'Labour': ['Neil Kinnock', 'John Smith', 'Gordon Brown', 'Robin Cook', 'Jack Straw', 'Tony Blair', 'Frank Dobson', 'Harriet Harman', 'David Blunkett', 'Donald Dewar', 'Gerald Kaufman', 'Bryan Gould'],
+                'Liberal Democrats': ['Paddy Ashdown', 'Alan Beith', 'Menzies Campbell', 'Charles Kennedy', 'Don Foster'],
+                'SNP': ['Alex Salmond', 'Margaret Ewing', 'Andrew Welsh'],
+                'Plaid Cymru': ['Dafydd Wigley', 'Elfyn Llwyd'],
+                'DUP': ['Ian Paisley', 'Peter Robinson'],
+                'Sinn Fein': [],
+                'SDLP': ['John Hume', 'Seamus Mallon'],
+                'Alliance': ['John Alderdice'],
+                'UUP': ['James Molyneaux', 'David Trimble'],
+                'Natural Law Party': [],
+                'Other': ['Joe Hendron (SDLP - gained Belfast West)']
+            },
+            '1987': {
+                'Conservative': ['Margaret Thatcher', 'Nigel Lawson', 'Sir Geoffrey Howe', 'Douglas Hurd', 'John Major', 'Kenneth Baker', 'Norman Fowler', 'Cecil Parkinson', 'Nicholas Ridley', 'John MacGregor', 'George Younger', 'John Moore', 'Malcolm Rifkind', 'Tom King', 'Tony Newton', 'William Waldegrave', 'Peter Lilley', 'Michael Heseltine', 'Norman Tebbit', 'Leon Brittan'],
+                'Labour': ['Neil Kinnock', 'Roy Hattersley', 'Gerald Kaufman', 'John Smith', 'Bryan Gould', 'Gordon Brown', 'Robin Cook', 'Tony Blair', 'Denis Healey', 'Michael Foot'],
+                'Liberal/SDP Alliance': ['David Steel', 'David Owen', 'Paddy Ashdown', 'Alan Beith', 'Alex Carlile', 'Charles Kennedy'],
+                'SNP': ['Alex Salmond', 'Gordon Wilson'],
+                'Plaid Cymru': ['Dafydd Elis-Thomas', 'Ieuan Wyn Jones'],
+                'DUP': ['Ian Paisley', 'Peter Robinson'],
+                'Sinn Fein': ['Gerry Adams'],
+                'SDLP': ['John Hume', 'Seamus Mallon'],
+                'UUP': ['James Molyneaux', 'Harold McCusker'],
+                'Other': ['Bob McTaggart (Labour - Glasgow Central)']
+            }
+        };
+
+        // Data for Legislation (New)
+        const legislationData = {
+            '2005': {
+                issue: "The Identity Cards Bill",
+                description: "Proposing a national identity card scheme to enhance security and combat illegal immigration. This was a controversial policy with strong opinions on both sides regarding civil liberties and effectiveness.",
+                stanceOptions: ["Support", "Oppose", "Amend", "Delay"],
+                expectedOutcome: "A key part of Labour's post-9/11 security agenda, but faced significant opposition."
+            },
+            '2001': {
+                issue: "Anti-terrorism, Crime and Security Act",
+                description: "A comprehensive bill introduced rapidly after 9/11 to strengthen powers against terrorism, including detention without trial for foreign nationals. Highly debated for its impact on human rights.",
+                stanceOptions: ["Support", "Oppose", "Review", "Delay"],
+                expectedOutcome: "Passed quickly due to national security urgency, but with ongoing scrutiny."
+            },
+            '1997': {
+                issue: "Minimum Wage Bill",
+                description: "Introducing a national minimum wage for the first time in the UK, a flagship Labour policy aimed at tackling poverty and exploitation.",
+                stanceOptions: ["Support", "Oppose", "Adjust"],
+                expectedOutcome: "A major overhaul of workers' rights and a significant shift in economic policy."
+            },
+            '1992': {
+                issue: "Maastricht Treaty Ratification",
+                description: "Ratification of the Treaty on European Union, which established the European Union and laid the groundwork for the Euro. This caused significant divisions within the Conservative Party.",
+                stanceOptions: ["Support", "Oppose", "Delay"],
+                expectedOutcome: "A defining moment for the UK's relationship with Europe, leading to deep party splits."
+            },
+            '1987': {
+                issue: "Poll Tax (Community Charge) Introduction",
+                description: "Replacing local property taxes with a flat-rate per-capita tax (Community Charge) to fund local government. Highly unpopular and led to widespread protests.",
+                stanceOptions: ["Support", "Oppose", "Reform"],
+                expectedOutcome: "One of the most controversial pieces of legislation, ultimately leading to its repeal."
+            }
+        };
+
+        // Data for News Feed (New structure for weeks)
+        // This will be a deep copy of the original static data to allow for dynamic additions.
+        const staticNewsFeedDataByYearAndWeek = {
+            '2005': [
+                // Week 1
+                [
+                    { headline: "London Bombings Rock Capital", description: "A series of coordinated terrorist attacks hit London's public transport system, killing 52 people. The Prime Minister condemned the attacks and vowed to fight terrorism.", pmAction: "PM Tony Blair condemned the attacks, launched a major investigation, and reiterated commitment to counter-terrorism efforts, including new security legislation." },
+                    { headline: "Iraq War Inquiry Pressure Mounts", description: "Public and political pressure continued for an inquiry into the UK's involvement in the Iraq War and the intelligence leading up to it.", pmAction: "The government resisted calls for a full public inquiry at this stage, citing ongoing military operations and security concerns." }
+                ],
+                // Week 2
+                [
+                    { headline: "Climate Change Becomes Key Issue", description: "Growing scientific consensus and public awareness pushed climate change higher on the political agenda, with calls for stronger environmental policies.", pmAction: "PM Blair made climate change a priority for the G8 summit, pushing for international cooperation and setting ambitious targets for carbon emission reductions." }
+                ],
+                // Week 3 (Example of more weeks)
+                [
+                    { headline: "Economy Shows Mixed Signals", description: "Economic reports indicate a mixed picture with some sectors growing while others face challenges.", pmAction: "Chancellor Gordon Brown emphasized fiscal prudence and continued investment in public services." }
+                ],
+                // Week 4
+                [
+                    { headline: "NHS Funding Debate Continues", description: "Discussions around the long-term funding for the National Health Service remain a hot topic.", pmAction: "The government reaffirmed its commitment to increased NHS investment and reform." }
+                ],
+                // Week 5
+                [
+                    { headline: "Education Reforms Proposed", description: "New proposals for school accountability and curriculum changes are being debated in Parliament.", pmAction: "The Education Secretary defended the reforms, stating they would raise standards for all pupils." }
+                ],
+                // Week 6
+                [
+                    { headline: "Immigration Policy Under Scrutiny", description: "Recent figures on immigration have led to renewed calls for tighter border controls and a review of policy.", pmAction: "The Home Office announced new measures to streamline immigration processes and tackle illegal immigration." }
+                ]
+            ],
+            '2001': [
+                // Week 1
+                [
+                    { headline: "9/11 Attacks Shock the World", description: "Terrorist attacks on the World Trade Center and the Pentagon led to a global shift in focus towards counter-terrorism and national security.", pmAction: "PM Tony Blair pledged full support to the US, committing UK forces to the 'War on Terror' in Afghanistan and introducing new anti-terrorism legislation." },
+                    { headline: "Foot and Mouth Disease Crisis Continues", description: "The devastating outbreak of Foot and Mouth disease continued to impact the agricultural industry and rural economy across the UK.", pmAction: "The government implemented widespread culling and movement restrictions, providing financial aid to affected farmers and working to restore confidence in British agriculture." }
+                ],
+                // Week 2
+                [
+                    { headline: "Euro Debate Intensifies", description: "Discussions continued over the UK's potential entry into the Eurozone, with economic arguments for and against joining the single currency.", pmAction: "The government maintained its 'five economic tests' for Euro entry, indicating that the time was not yet right for joining." }
+                ],
+                 // Week 3
+                [
+                    { headline: "Public Sector Strikes Loom", description: "Unions warn of potential industrial action over pay disputes and working conditions in the public sector.", pmAction: "The government called for constructive dialogue to resolve the disputes and avoid disruption to services." }
+                ],
+                // Week 4
+                [
+                    { headline: "Housing Market Cools Down", description: "Reports indicate a slowdown in the housing market after a period of rapid growth, raising concerns about affordability.", pmAction: "The government stated it was monitoring the market closely and would continue to support first-time buyers." }
+                ]
+            ],
+            '1997': [
+                // Week 1
+                [
+                    { headline: "Hong Kong Handover to China", description: "After 156 years of British rule, Hong Kong was handed over to China, marking the end of a significant chapter in British imperial history.", pmAction: "PM Tony Blair attended the handover ceremony, emphasizing the UK's commitment to Hong Kong's autonomy under the 'one country, two systems' principle." },
+                    { headline: "Princess Diana's Tragic Death", description: "The sudden death of Princess Diana in a car crash in Paris shocked the nation and led to an unprecedented outpouring of public grief.", pmAction: "PM Tony Blair paid tribute to Diana, famously calling her the 'People's Princess', and worked with the Royal Family to manage the national mourning." }
+                ],
+                // Week 2
+                [
+                    { headline: "Devolution Referendums in Scotland and Wales", description: "Referendums were held in Scotland and Wales, leading to overwhelming votes in favour of establishing a Scottish Parliament and a Welsh Assembly.", pmAction: "The Labour government proceeded with legislation to establish the devolved bodies, fulfilling key manifesto pledges." }
+                ],
+                // Week 3
+                [
+                    { headline: "Millennium Dome Project Under Fire", description: "Controversy continues to surround the Millennium Dome project, with questions raised about its cost and purpose.", pmAction: "The government defended the project as a symbol of national optimism for the new millennium." }
+                ],
+                // Week 4
+                [
+                    { headline: "Northern Ireland Peace Talks Progress", description: "Intensive negotiations continue in Northern Ireland, aiming to secure a lasting peace agreement.", pmAction: "The Prime Minister expressed cautious optimism about the peace process and urged all parties to engage constructively." }
+                ]
+            ],
+            '1992': [
+                // Week 1
+                [
+                    { headline: "Black Wednesday: Pound Crashes Out of ERM", description: "The UK was forced to withdraw the Pound Sterling from the European Exchange Rate Mechanism (ERM) after a dramatic day of currency speculation, a major blow to the government's economic policy.", pmAction: "Chancellor Norman Lamont announced the withdrawal, and the government shifted its economic strategy, focusing on interest rate cuts to stimulate growth, though facing severe public criticism." }
+                ],
+                // Week 2
+                [
+                    { headline: "Coal Mine Closures Spark Protests", description: "The government announced plans for widespread coal mine closures, leading to significant industrial unrest and protests across mining communities.", pmAction: "PM John Major's government defended the closures as economically necessary, despite strong opposition from unions and some within his own party." },
+                    { headline: "Bosnian War Escalates in Yugoslavia", description: "The conflict in the former Yugoslavia continued to escalate, with growing international concern over humanitarian crises and ethnic cleansing.", pmAction: "The UK, along with international partners, engaged in diplomatic efforts and provided humanitarian aid, contributing to UN peacekeeping forces." }
+                ],
+                // Week 3
+                [
+                    { headline: "NHS Reforms Face Opposition", description: "Government proposals for internal markets within the NHS are meeting resistance from medical professionals and unions.", pmAction: "The Health Secretary insisted the reforms would improve efficiency and patient choice." }
+                ],
+                // Week 4
+                [
+                    { headline: "Unemployment Figures Rise", description: "New data shows a continued increase in unemployment, putting pressure on the government's economic strategy.", pmAction: "The government pledged to support job creation initiatives and retraining programs." }
+                ]
+            ],
+            '1987': [
+                // Week 1
+                [
+                    { headline: "Great Storm Batters Southern England", description: "A severe storm caused widespread damage, uprooted millions of trees, and led to significant disruption and power outages across Southern England.", pmAction: "The government coordinated emergency responses, deployed military personnel for cleanup, and initiated efforts for recovery and reforestation." }
+                ],
+                // Week 2
+                [
+                    { headline: "Privatisation Programme Continues", description: "The Conservative government continued its policy of privatising state-owned industries, including British Airways and Rolls-Royce.", pmAction: "PM Margaret Thatcher championed the privatisation program as a means to improve efficiency and widen share ownership." },
+                    { headline: "Cold War Tensions Remain High", description: "Despite some thawing, Cold War tensions persisted, with ongoing nuclear arms race discussions and geopolitical rivalries.", pmAction: "PM Margaret Thatcher maintained a strong alliance with the US, supporting missile deployment and advocating for a robust defence posture while engaging in arms control talks." }
+                ],
+                // Week 3
+                [
+                    { headline: "Education Reform Bill Debated", description: "Proposals for a national curriculum and new school management structures are causing lively debate in Parliament.", pmAction: "The Education Secretary emphasized the government's commitment to raising educational standards." }
+                ],
+                // Week 4
+                [
+                    { headline: "Trade Union Power Under Review", description: "The government is considering further legislation to curb the power of trade unions following recent industrial disputes.", pmAction: "The Prime Minister reiterated the need for a balanced approach to industrial relations to promote economic growth." }
+                ]
+            ]
+        };
+
+        // Deep copy the static news data to allow for modifications
+        let dynamicNewsFeedData = JSON.parse(JSON.stringify(staticNewsFeedDataByYearAndWeek));
+
+
+        // DOM Elements
+        const historicalSelect = document.getElementById('historical-select');
+        const voteshareInputsDiv = document.getElementById('voteshare-inputs');
+        const totalVoteShareSpan = document.getElementById('total-vote-share');
+        const voteShareWarning = document.getElementById('vote-share-warning');
+        const projectedSeatsDiv = document.getElementById('projected-seats');
+        const coalitionOptionsDiv = document.getElementById('coalition-options');
+        const coalitionTotalSeatsSpan = document.getElementById('coalition-total-seats');
+        const coalitionStatusDiv = document.getElementById('coalition-status');
+        const constituencyNameInput = document.getElementById('constituency-name');
+        const winningPartySelect = document.getElementById('winning-party');
+        const winningVotesInput = document.getElementById('winning-votes');
+        const turnoutInput = document.getElementById('turnout');
+        const addDeclarationBtn = document.getElementById('add-declaration-btn');
+        const clearDeclarationsBtn = document.getElementById('clear-declarations-btn');
+        const declaredSeatsSummaryDiv = document.getElementById('declared-seats-summary');
+        const declaredConstituenciesList = document.getElementById('declared-constituencies-list');
+        const noDeclarationsMessage = document.getElementById('no-declarations-message');
+        const mpsAtRiskList = document.getElementById('mps-at-risk-list');
+        const noMPsAtRiskMessage = document.getElementById('no-mps-at-risk-message');
+        const cabinetSection = document.getElementById('cabinet-section');
+        const cabinetList = document.getElementById('cabinet-list');
+        const coalitionCabinetSection = document.getElementById('coalition-cabinet-section');
+        const coalitionCabinetList = document.getElementById('coalition-cabinet-list');
+        const coalitionCabinetToggleButton = document.getElementById('coalition-cabinet-toggle-button');
+        const reshuffleCabinetToggleButton = document.getElementById('reshuffle-cabinet-toggle-button');
+        let betrayPmButton; // Defined globally to be accessible after DOMContentLoaded
+
+        // Tab elements
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const legislationContentDiv = document.getElementById('legislation-content');
+        const legislationActionsDiv = document.getElementById('legislation-actions');
+        const proposeStanceBtn = document.getElementById('propose-stance-btn');
+        const legislationStanceButtons = document.querySelectorAll('.legislation-stance-button');
+        const newsfeedContentDiv = document.getElementById('newsfeed-content');
+        const newsfeedWeekNavigation = document.getElementById('newsfeed-week-navigation');
+        const prevWeekBtn = document.getElementById('prev-week-btn');
+        const nextWeekBtn = document.getElementById('next-week-btn');
+        const currentWeekDisplay = document.getElementById('current-week-display');
+
+
+        // Message Box Elements
+        const messageBoxOverlay = document.getElementById('message-box-overlay');
+        const messageBoxText = document.getElementById('message-box-text');
+        const messageBoxOkButton = document.getElementById('message-box-ok-button');
+
+        // State variables
+        let currentVoteshare = {};
+        let declaredResults = []; // Stores objects like { constituency: '...', party: '...', votes: '...', turnout: '...' }
+        let declaredSeats = {}; // Stores seat counts for declared constituencies
+        let currentElectionYear = '2010'; // Track the current selected year
+        let currentCustomCabinet = null; // Stores the currently displayed custom cabinet (reshuffled or betrayed)
+        let selectedLegislationStance = ''; // Stores the currently selected stance for legislation
+        let currentNewsWeek = 0; // 0-indexed, representing the current week being displayed for news
+
+        const MAX_NEWS_WEEKS = 16; // Define maximum number of weeks for news feed
+
+        /**
+         * Generates generic news items to fill out weeks if specific data is sparse.
+         * @returns {object} A generic news item.
+         */
+        function generateGenericNewsItem() {
+            const genericHeadlines = [
+                "Economic Outlook Stable Amid Global Challenges",
+                "Public Services Face Budget Scrutiny",
+                "Debate Rages Over Future of European Relations",
+                "New Initiatives Launched to Tackle Crime",
+                "Environmental Concerns Gain Traction",
+                "Opinion Polls Show Shifting Public Mood",
+                "International Summit Focuses on Trade Agreements",
+                "Housing Crisis Remains a Priority",
+                "Transport Infrastructure Investment Discussed",
+                "Digital Economy Growth Continues",
+                "Healthcare Waiting Lists Under Review",
+                "Social Care Funding Debates Intensify",
+                "Defence Spending Review Underway",
+                "Agricultural Sector Faces New Regulations",
+                "Cultural Funding Boost Announced"
+            ];
+
+            const genericDescriptions = [
+                "The latest economic indicators suggest a period of cautious growth, but global uncertainties persist.",
+                "Departments are being asked to identify efficiencies as the government aims to balance the books.",
+                "Politicians from all sides continue to articulate their vision for the UK's role in Europe.",
+                "New police funding and community programs are being rolled out to address local crime rates.",
+                "Activists and scientists call for more urgent action on climate change and biodiversity loss.",
+                "Recent surveys indicate public sentiment is fluctuating on key government policies.",
+                "Leaders from around the world gather to discuss new opportunities and challenges in global trade.",
+                "Affordable housing remains a critical issue, with new proposals for development being considered.",
+                "Plans for upgrading roads and railways are being reviewed to improve connectivity.",
+                "The tech sector continues to be a strong performer, contributing significantly to national output.",
+                "Efforts are being made to reduce patient waiting times and improve access to medical services.",
+                "The long-term sustainability of social care provision is a key focus for policymakers.",
+                "Discussions are ongoing regarding the allocation of resources for national security and defence.",
+                "Farmers are adapting to new environmental standards and market conditions.",
+                "Government pledges increased support for arts and heritage organizations across the country."
+            ];
+
+            const genericPMActions = [
+                "The Prime Minister's office emphasized fiscal responsibility and long-term planning.",
+                "The government is committed to delivering efficient public services while managing national finances.",
+                "The Prime Minister reiterated the government's stance on international cooperation and national interest.",
+                "The Home Secretary pledged to support law enforcement and ensure public safety.",
+                "The government highlighted its commitment to environmental protection and sustainable development.",
+                "The Prime Minister acknowledged the importance of listening to public concerns and adapting policies.",
+                "The government actively participates in international forums to promote UK interests.",
+                "The Housing Minister outlined plans to increase housing supply and affordability.",
+                "The Transport Secretary detailed ongoing projects to modernize the national transport network.",
+                "The government continues to support innovation and growth in emerging industries.",
+                "The Health Secretary outlined new strategies to improve patient outcomes and service delivery.",
+                "The government is exploring various funding models to ensure robust social care for the future.",
+                "The Defence Secretary assured the public of the nation's security capabilities.",
+                "The Minister for Agriculture met with industry leaders to discuss sector challenges.",
+                "The Culture Secretary announced new grants for local cultural initiatives."
+            ];
+
+            const randomIndex = Math.floor(Math.random() * genericHeadlines.length);
+            return {
+                headline: genericHeadlines[randomIndex],
+                description: genericDescriptions[randomIndex],
+                pmAction: genericPMActions[randomIndex]
+            };
+        }
+
+        /**
+         * Ensures each year in dynamicNewsFeedData has at least MAX_NEWS_WEEKS of content.
+         */
+        function padNewsFeedData() {
+            for (const year in dynamicNewsFeedData) {
+                while (dynamicNewsFeedData[year].length < MAX_NEWS_WEEKS) {
+                    dynamicNewsFeedData[year].push([generateGenericNewsItem()]);
+                }
+            }
+        }
+
+        /**
+         * Displays a custom message box.
+         * @param {string} message - The message to display.
+         */
+        function showMessage(message) {
+            messageBoxText.textContent = message;
+            messageBoxOverlay.classList.remove('hidden');
+        }
+
+        // Event listener for the message box OK button
+        messageBoxOkButton.addEventListener('click', () => {
+            messageBoxOverlay.classList.add('hidden');
+        });
+
+        /**
+         * Generates a valid HTML ID from a party name.
+         * Replaces spaces and forward slashes with hyphens.
+         * @param {string} partyName - The original party name.
+         * @returns {string} A valid HTML ID.
+         */
+        function generateValidId(partyName) {
+            return partyName.toLowerCase().replace(/\s/g, '-').replace(/\//g, '-');
+        }
+
+        /**
+         * Initializes the voteshare inputs based on the selected historical data.
+         * @param {string} year - The year key from historicalData.
+         */
+        function initializeVoteshareInputs(year) {
+            currentElectionYear = year; // Update the current election year
+            const data = historicalData[year].parties;
+            const totalSeatsForYear = historicalData[year].totalSeats;
+            const majorityNeededForYear = historicalData[year].majorityNeeded;
+
+
+            // Update the total seats display in the simulator section
+            document.querySelector('#tab-content-simulator .section-win7 p').innerHTML = `Adjust the vote share percentages below to see the projected seat distribution. Total seats: ${totalSeatsForYear}. Majority needed: ${majorityNeededForYear}.`;
+
+
+            voteshareInputsDiv.innerHTML = ''; // Clear previous inputs
+            currentVoteshare = {}; // Reset current voteshare
+
+            // Dynamically populate winning party select for scoreboard based on current year's parties
+            winningPartySelect.innerHTML = '<option value="">Select Party</option>';
+            const allPartyNames = Object.keys(historicalData[currentElectionYear].parties);
+            allPartyNames.forEach(partyName => {
+                const option = document.createElement('option');
+                option.value = partyName;
+                option.textContent = partyName;
+                winningPartySelect.appendChild(option);
+            });
+
+
+            for (const party in data) {
+                currentVoteshare[party] = data[party].voteShare;
+                const partyId = generateValidId(party); // Use the new helper function
+
+                const div = document.createElement('div');
+                div.className = 'flex flex-col';
+                div.innerHTML = `
+                    <label for="${partyId}-voteshare" class="mb-1">${party}:</label>
+                    <div class="flex items-center">
+                        <input type="range" id="${partyId}-voteshare"
+                               min="0" max="100" step="0.1" value="${data[party].voteShare}"
+                               class="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer">
+                        <input type="number" id="${partyId}-voteshare-num"
+                               min="0" max="100" step="0.1" value="${data[party].voteShare}"
+                               class="input-win7 w-20 ml-2">
+                        <span class="ml-1">%</span>
+                    </div>
+                `;
+                voteshareInputsDiv.appendChild(div);
+
+                // Add event listeners for both range and number inputs
+                const rangeInput = div.querySelector(`#${partyId}-voteshare`); // Use partyId here
+                const numInput = div.querySelector(`#${partyId}-voteshare-num`); // Use partyId here
+
+                rangeInput.addEventListener('input', (e) => {
+                    numInput.value = e.target.value;
+                    currentVoteshare[party] = parseFloat(e.target.value);
+                    updateVoteshareSimulator(); // Recalculate seats proportionally
+                });
+                numInput.addEventListener('input', (e) => {
+                    rangeInput.value = e.target.value;
+                    currentVoteshare[party] = parseFloat(e.target.value);
+                    updateVoteshareSimulator(); // Recalculate seats proportionally
+                });
+            }
+
+            // For 2010, use the pre-set seats for initial display.
+            // For other years, populate projectedSeats directly from historicalData
+            if (year === '2010') {
+                const initialSeats2010 = {};
+                for (const party in historicalData['2010'].parties) {
+                    initialSeats2010[party] = historicalData['2010'].parties[party].seats;
+                }
+                updateVoteshareSimulator(initialSeats2010); // Pass the initial seats for 2010
+            } else {
+                const actualHistoricalSeats = {};
+                for (const party in historicalData[year].parties) {
+                    actualHistoricalSeats[party] = historicalData[year].parties[party].seats;
+                }
+                updateVoteshareSimulator(actualHistoricalSeats); // Pass actual historical seats
+            }
+            updateMPsAtRisk(year); // Update MPs at risk when year changes
+            updateCabinetDisplay(year); // Update cabinet display
+            updateLegislationTab(year); // Update legislation tab
+            currentNewsWeek = 0; // Reset news week when year changes
+            updateNewsFeedTab(year); // Update news feed tab
+            
+            // Crucial: Hide coalition cabinet section when changing to a historical year
+            coalitionCabinetSection.classList.add('hidden');
+            coalitionCabinetList.classList.add('hidden'); // Ensure list is also hidden
+            coalitionCabinetToggleButton.textContent = 'Show Cabinet'; // Reset button text
+        }
+
+        /**
+         * Calculates and displays projected seats based on current voteshare.
+         * Optionally displays specific initial seats for 2010 default.
+         * @param {object} [seatsToDisplay=null] - Object {party: seats} to display. If null, calculates proportionally.
+         */
+        function updateVoteshareSimulator(seatsToDisplay = null) {
+            let totalVoteShare = 0;
+            // Ensure currentVoteshare is an object before iterating
+            if (typeof currentVoteshare !== 'object' || currentVoteshare === null) {
+                currentVoteshare = {};
+            }
+
+            for (const party in currentVoteshare) {
+                totalVoteShare += currentVoteshare[party];
+            }
+            totalVoteShareSpan.textContent = `${totalVoteShare.toFixed(1)}%`;
+
+            if (totalVoteShare > 100.1 || totalVoteShare < 99.9) {
+                voteShareWarning.textContent = "Warning: Total vote share should be close to 100%. Adjust values.";
+            } else {
+                voteShareWarning.textContent = "";
+            }
+
+            // Get total seats for the current year
+            const totalSeatsForYear = historicalData[currentElectionYear].totalSeats;
+
+            let projectedSeats = {};
+
+            // If seatsToDisplay is provided, use them directly. This is for initial load of 2010 and all historical years.
+            if (seatsToDisplay) {
+                projectedSeats = { ...seatsToDisplay };
+            } else {
+                // This block runs when sliders are adjusted for 2010, or if no specific seats are provided for other years (though they should be).
+                let allocatedSeats = 0;
+                const partyNames = Object.keys(currentVoteshare);
+
+                for (const party of partyNames) {
+                    const share = currentVoteshare[party] / 100;
+                    projectedSeats[party] = Math.floor(share * totalSeatsForYear);
+                    allocatedSeats += projectedSeats[party];
+                }
+
+                let remainingSeats = totalSeatsForYear - allocatedSeats;
+                const partiesByRemainder = partyNames
+                    .map(party => ({
+                        party: party,
+                        remainder: (currentVoteshare[party] / 100 * totalSeatsForYear) - projectedSeats[party]
+                    }))
+                    .sort((a, b) => b.remainder - a.remainder);
+
+                if (partiesByRemainder.length > 0) {
+                    for (let i = 0; i < remainingSeats; i++) {
+                        if (i < partiesByRemainder.length) {
+                            projectedSeats[partiesByRemainder[i].party]++;
+                        }
+                    }
+                }
+            }
+
+            // Display projected seats
+            projectedSeatsDiv.innerHTML = ''; // Clear previous
+            const partyNamesForDisplay = Object.keys(currentVoteshare);
+            for (const party of partyNamesForDisplay) {
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between p-2 border border-gray-400 rounded-md bg-gray-200';
+                div.innerHTML = `
+                    <span class="font-bold">${party}:</span>
+                    <span>${projectedSeats[party] || 0} seats</span>
+                `;
+                projectedSeatsDiv.appendChild(div);
+            }
+
+            // Update coalition builder with new projected seats
+            updateCoalitionBuilder(projectedSeats);
+        }
+
+        /**
+         * Initializes and updates the coalition builder.
+         * @param {object} currentProjectedSeats - The current projected seats from the simulator.
+         */
+        function updateCoalitionBuilder(currentProjectedSeats) {
+            coalitionOptionsDiv.innerHTML = ''; // Clear previous
+            let selectedSeats = 0;
+
+            // Ensure currentVoteshare is an object before iterating
+            if (typeof currentVoteshare !== 'object' || currentVoteshare === null) {
+                currentVoteshare = {}; // Re-initialize if it's not an object
+            }
+
+            for (const party in currentVoteshare) { // Use currentVoteshare keys for party list
+                const partyId = generateValidId(party); // Use the new helper function
+                const div = document.createElement('div');
+                div.className = 'flex items-center';
+                div.innerHTML = `
+                    <input type="checkbox" id="coalition-${partyId}"
+                           data-party="${party}"
+                           class="mr-2 h-4 w-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                    <label for="coalition-${partyId}" class="cursor-pointer">${party}</label>
+                `;
+                coalitionOptionsDiv.appendChild(div);
+
+                const checkbox = div.querySelector(`#coalition-${partyId}`); // Use partyId here
+                checkbox.addEventListener('change', () => {
+                    calculateCoalitionSeats(currentProjectedSeats);
+                });
+            }
+            calculateCoalitionSeats(currentProjectedSeats); // Initial calculation
+        }
+
+        /**
+         * Calculates the total seats for the selected coalition and provides a description.
+         * @param {object} currentProjectedSeats - The current projected seats from the simulator.
+         */
+        function calculateCoalitionSeats(currentProjectedSeats) {
+            let total = 0;
+            const selectedParties = [];
+            const checkboxes = coalitionOptionsDiv.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    const party = checkbox.dataset.party;
+                    selectedParties.push(party);
+                    total += currentProjectedSeats[party] || 0;
+                }
+            });
+            coalitionTotalSeatsSpan.textContent = total;
+
+            // Use the majority needed for the current year
+            const majorityNeededForYear = historicalData[currentElectionYear].majorityNeeded;
+            let statusMessage = '';
+
+            // Check for Conservative and Labour coalition
+            const isCon = selectedParties.includes('Conservative');
+            const isLab = selectedParties.includes('Labour');
+
+            if (isCon && isLab && selectedParties.length > 1) {
+                coalitionStatusDiv.className = 'mt-2 text-lg font-bold text-red-700';
+                statusMessage = `An alliance between Conservative and Labour is generally not possible in peacetime.`;
+                coalitionCabinetSection.classList.add('hidden'); // Hide cabinet for impossible coalition
+                coalitionTotalSeatsSpan.textContent = "N/A"; // Indicate impossible
+            } else if (total >= majorityNeededForYear) {
+                coalitionStatusDiv.className = 'mt-2 text-lg font-bold text-green-700';
+                if (selectedParties.length === 1) {
+                    statusMessage = `SUCCESS! ${selectedParties[0]} has achieved a majority (${total} seats) and can form a stable government.`;
+                } else if (selectedParties.length === 2) {
+                    statusMessage = `SUCCESS! This two-party coalition (${selectedParties.join(' and ')} with ${total} seats) has achieved a majority. Historically, these can be stable but require compromise.`;
+                } else {
+                    statusMessage = `SUCCESS! This multi-party coalition (${selectedParties.join(', ')} with ${total} seats) has achieved a majority. Such governments can be challenging to maintain due to diverse interests, but can be effective with strong leadership.`;
+                }
+                
+                // Only update and show predicted cabinet if it's the 2010 election
+                if (currentElectionYear === '2010') {
+                    updatePredictedCoalitionCabinet(selectedParties, currentProjectedSeats);
+                } else {
+                    coalitionCabinetSection.classList.add('hidden'); // Hide for historical years
+                }
+
+            } else {
+                coalitionStatusDiv.className = 'mt-2 text-lg font-bold text-red-700';
+                if (selectedParties.length > 0) {
+                    statusMessage = `Needs ${majorityNeededForYear - total} more seats for a majority. No majority achieved. A minority government or another election may be necessary.`;
+                } else {
+                    statusMessage = `Select parties to form a potential coalition government. A majority requires ${majorityNeededForYear} seats.`;
+                }
+                coalitionCabinetSection.classList.add('hidden'); // Hide cabinet if no majority
+            }
+            coalitionStatusDiv.textContent = statusMessage;
+        }
+
+        /**
+         * Generates a hypothetical cabinet based on selected coalition parties.
+         * @param {string[]} selectedParties - Array of party names in the coalition.
+         * @param {object} projectedSeats - Current projected seats for all parties.
+         * @returns {object} A map of cabinet positions to MP names and their parties.
+         */
+        function predictCoalitionCabinet(selectedParties, projectedSeats) {
+            const cabinet = {};
+            // Only predict coalition cabinet for 2010
+            if (currentElectionYear !== '2010' || selectedParties.length === 0) {
+                return cabinet;
+            }
+
+            // Sort selected parties by their projected seats in descending order
+            const sortedParties = selectedParties
+                .map(partyName => ({ name: partyName, seats: projectedSeats[partyName] || 0 }))
+                .sort((a, b) => b.seats - a.seats);
+
+            const assignedMPs = new Set(); // To keep track of assigned MPs
+
+            // Helper to get an unassigned MP from a party
+            const getUnassignedMP = (partyName) => {
+                const mps = prominentMPsData[currentElectionYear]?.[partyName] || [];
+                for (const mp of mps) {
+                    if (!assignedMPs.has(mp)) {
+                        assignedMPs.add(mp);
+                        return mp;
+                    }
+                }
+                return `A ${partyName} MP`; // Fallback if no specific MP or all used
+            };
+
+            // Assign Prime Minister
+            const pmParty = sortedParties[0].name;
+            cabinet['Prime Minister'] = `${getUnassignedMP(pmParty)} (${pmParty})`;
+
+            // Assign other key roles, cycling through parties or prioritizing top ones
+            const keyRoles = [
+                'Chancellor of the Exchequer',
+                'Secretary of State for Foreign and Commonwealth Affairs',
+                'Secretary of State for the Home Department',
+                'Secretary of State for Defence',
+                'Secretary of State for Health',
+                'Secretary of State for Education',
+                'Secretary of State for Justice',
+                'Secretary of State for Business and Trade',
+                'Secretary of State for Work and Pensions',
+                'Secretary of State for Environment, Food and Rural Affairs',
+                'Secretary of State for Transport',
+                'Secretary of State for Culture, Media and Sport',
+                'Deputy Prime Minister', // Often from the second largest party
+                'Lord Chancellor',
+                'Leader of the House of Commons',
+                'Leader of the House of Lords',
+                'Chief Secretary to the Treasury',
+                'Chancellor of the Duchy of Lancaster',
+                'Minister of Agriculture, Fisheries and Food',
+                'Secretary of State for Northern Ireland',
+                'Secretary of State for Scotland',
+                'Secretary of State for Wales',
+                'Secretary of State for International Development',
+                'Minister without Portfolio'
+            ];
+
+            let partyIndex = 0;
+            for (const role of keyRoles) {
+                // Skip if PM is already assigned to this role (e.g., PM is also First Lord of Treasury)
+                if (role === 'Prime Minister') continue;
+
+                let assigned = false;
+                // Try to assign from the next party in the sorted list
+                if (sortedParties[partyIndex] && !cabinet[role]) {
+                    const partyName = sortedParties[partyIndex].name;
+                    const mp = getUnassignedMP(partyName);
+                    if (mp) {
+                        cabinet[role] = `${mp} (${partyName})`;
+                        assigned = true;
+                    }
+                }
+
+                // If not assigned or not enough distinct parties, try other parties or fallback to PM's party
+                if (!assigned && selectedParties.length > 0) {
+                    // Cycle through all selected parties to find an unassigned MP for the role
+                    for (let i = 0; i < sortedParties.length; i++) {
+                        const partyName = sortedParties[i].name;
+                        if (!cabinet[role]) { // Check if role is still unassigned
+                            const mp = getUnassignedMP(partyName);
+                            if (mp) {
+                                cabinet[role] = `${mp} (${partyName})`;
+                                assigned = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (!assigned && !cabinet[role]) { // Final fallback if still unassigned
+                    cabinet[role] = `A ${pmParty} MP`;
+                }
+
+                partyIndex = (partyIndex + 1) % sortedParties.length; // Move to the next party for the next role
+            }
+
+            return cabinet;
+        }
+
+
+        /**
+         * Updates the display of the predicted coalition cabinet.
+         * @param {string[]} selectedParties - Array of party names in the coalition.
+         * @param {object} projectedSeats - Current projected seats for all parties.
+         */
+        function updatePredictedCoalitionCabinet(selectedParties, projectedSeats) {
+            // Only update and show if it's the 2010 election
+            if (currentElectionYear !== '2010') {
+                coalitionCabinetSection.classList.add('hidden');
+                return;
+            }
+
+            const cabinet = predictCoalitionCabinet(selectedParties, projectedSeats);
+            coalitionCabinetList.innerHTML = ''; // Clear previous
+
+            if (Object.keys(cabinet).length === 0) {
+                coalitionCabinetSection.classList.add('hidden');
+                return;
+            }
+
+            // Show the section and ensure toggle is functional
+            coalitionCabinetSection.classList.remove('hidden');
+            // By default, hide the list content, user needs to toggle it
+            coalitionCabinetList.classList.add('hidden'); // Keep it hidden until toggled
+            coalitionCabinetToggleButton.textContent = 'Show Cabinet'; // Reset button text
+
+            for (const position in cabinet) {
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between p-2 border border-gray-400 rounded-md bg-gray-200';
+                div.innerHTML = `
+                    <span class="font-bold">${position}:</span>
+                    <span>${cabinet[position]}</span>
+                `;
+                coalitionCabinetList.appendChild(div);
+            }
+        }
+
+        /**
+         * Toggles the visibility of the predicted coalition cabinet list.
+         */
+        coalitionCabinetToggleButton.addEventListener('click', () => {
+            if (coalitionCabinetList.classList.contains('hidden')) {
+                coalitionCabinetList.classList.remove('hidden');
+                coalitionCabinetToggleButton.textContent = 'Hide Cabinet';
+            } else {
+                coalitionCabinetList.classList.add('hidden');
+                coalitionCabinetToggleButton.textContent = 'Show Cabinet';
+            }
+        });
+
+
+        /**
+         * Adds a declared constituency result to the scoreboard.
+         */
+        function addDeclaration() {
+            const constituency = constituencyNameInput.value.trim();
+            const party = winningPartySelect.value;
+            const votes = parseInt(winningVotesInput.value);
+            const turnout = parseInt(turnoutInput.value);
+
+            if (!constituency || !party || isNaN(votes) || votes <= 0 || isNaN(turnout) || turnout <= 0) {
+                showMessage("Please fill in all declaration fields correctly.");
+                return;
+            }
+
+            // Check if constituency already declared
+            if (declaredResults.some(d => d.constituency.toLowerCase() === constituency.toLowerCase())) {
+                showMessage(`Constituency "${constituency}" has already been declared. Please enter a unique constituency.`);
+                return;
+            }
+
+            declaredResults.push({ constituency, party, votes, turnout });
+            updateDeclaredScoreboard();
+
+            // Clear inputs
+            constituencyNameInput.value = '';
+            winningPartySelect.value = '';
+            winningVotesInput.value = '0';
+            turnoutInput.value = '0';
+        }
+
+        /**
+         * Clears all declarations from the scoreboard.
+         */
+        function clearAllDeclarations() {
+            declaredResults = []; // Empty the array
+            updateDeclaredScoreboard(); // Refresh the display
+            showMessage("All declarations cleared!");
+        }
+
+        /**
+         * Updates the declared seats summary and list of declared constituencies.
+         */
+        function updateDeclaredScoreboard() {
+            declaredSeats = {}; // Reset counts
+            declaredResults.forEach(result => {
+                declaredSeats[result.party] = (declaredSeats[result.party] || 0) + 1;
+            });
+
+            // Update summary
+            declaredSeatsSummaryDiv.innerHTML = '';
+            // Use the comprehensive list of parties for consistent display in scoreboard
+            const allParties = Object.keys(historicalData['2010'].parties); // Use 2010 parties as a baseline for all possible parties
+            let totalDeclared = 0;
+
+            allParties.forEach(party => {
+                const seats = declaredSeats[party] || 0;
+                totalDeclared += seats;
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between p-2 border border-gray-400 rounded-md bg-gray-200';
+                div.innerHTML = `
+                    <span class="font-bold">${party}:</span>
+                    <span>${seats} seats</span>
+                `;
+                declaredSeatsSummaryDiv.appendChild(div);
+            });
+
+            // Add total declared seats, using the total seats for the *current* election year
+            const totalSeatsForYear = historicalData[currentElectionYear].totalSeats;
+            const totalDiv = document.createElement('div');
+            totalDiv.className = 'flex items-center justify-between p-2 border border-gray-400 rounded-md bg-gray-200 col-span-full font-bold';
+            totalDiv.innerHTML = `
+                <span>Total Declared:</span>
+                <span>${totalDeclared} / ${totalSeatsForYear}</span>
+            `;
+            declaredSeatsSummaryDiv.appendChild(totalDiv);
+
+
+            // Update declared constituencies list
+            declaredConstituenciesList.innerHTML = '';
+            if (declaredResults.length === 0) {
+                noDeclarationsMessage.style.display = 'block';
+            } else {
+                noDeclarationsMessage.style.display = 'none';
+                declaredResults.forEach(result => {
+                    const p = document.createElement('p');
+                    p.className = 'border-b border-gray-300 py-1 last:border-b-0';
+                    p.textContent = `${result.constituency}: ${result.party} (${result.votes} votes, ${result.turnout} turnout)`;
+                    declaredConstituenciesList.appendChild(p);
+                });
+            }
+        }
+
+        /**
+         * Updates the "MPs at Risk" section based on the selected year.
+         * @param {string} year - The selected election year.
+         */
+        function updateMPsAtRisk(year) {
+            const marginals = marginalSeatsData[year];
+            mpsAtRiskList.innerHTML = ''; // Clear previous content
+
+            if (!marginals || marginals.length === 0) {
+                noMPsAtRiskMessage.style.display = 'block';
+                return;
+            } else {
+                noMPsAtRiskMessage.style.display = 'none';
+            }
+
+            const table = document.createElement('table');
+            table.className = 'table-win7'; /* Changed to table-win7 */
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Constituency</th>
+                        <th>MP</th>
+                        <th>Winning Party</th>
+                        <th>Majority</th>
+                        <th>Swing Needed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            `;
+            const tbody = table.querySelector('tbody');
+
+            marginals.forEach(mpData => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${mpData.constituency}</td>
+                    <td>${mpData.mp}</td>
+                    <td>${mpData.party}</td>
+                    <td>${mpData.majority}</td>
+                    <td>${mpData.swingNeeded}</td>
+                `;
+                tbody.appendChild(row);
+            });
+            mpsAtRiskList.appendChild(table);
+        }
+
+        /**
+         * Shuffles an array in place (Fisher-Yates algorithm).
+         * @param {Array} array - The array to shuffle.
+         */
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        /**
+         * Generates a reshuffled cabinet for a given historical year, drawing MPs from the ruling party.
+         * Can also be used to generate a new cabinet after a successful betrayal.
+         * @param {string} year - The historical election year.
+         * @param {string} [fixedPmName=''] - If a new PM is fixed (e.g., after betrayal), their name.
+         * @param {string} [fixedPmParty=''] - If a new PM is fixed, their party.
+         * @returns {object} A new cabinet object with reshuffled MPs.
+         */
+        function generateReshuffledCabinet(year, fixedPmName = '', fixedPmParty = '') {
+            const originalCabinetTemplate = cabinetData[year];
+            const reshuffledCabinet = {};
+            const assignedMPs = new Set();
+
+            let pmName = fixedPmName;
+            let pmParty = fixedPmParty;
+
+            if (!pmName && originalCabinetTemplate['Prime Minister']) {
+                const pmMatch = originalCabinetTemplate['Prime Minister'].match(/^(.*?)\s\((.*?)\)/);
+                if (pmMatch) {
+                    pmName = pmMatch[1];
+                    pmParty = pmMatch[2];
+                }
+            }
+
+            if (pmName && pmParty) {
+                reshuffledCabinet['Prime Minister'] = `${pmName} (${pmParty})`;
+                assignedMPs.add(pmName);
+            } else {
+                // Fallback if no PM found or fixed PM provided
+                reshuffledCabinet['Prime Minister'] = 'Unknown Prime Minister';
+            }
+
+            let availableMPsForReshuffle = [];
+            if (pmParty && prominentMPsData[year] && prominentMPsData[year][pmParty]) {
+                prominentMPsData[year][pmParty].forEach(mp => {
+                    if (!assignedMPs.has(mp)) { // Ensure PM is not added to the pool for other roles
+                        availableMPsForReshuffle.push({ name: mp, party: pmParty });
+                    }
+                });
+            }
+            shuffleArray(availableMPsForReshuffle);
+
+            const rolesToReshuffle = Object.keys(originalCabinetTemplate).filter(role => role !== 'Prime Minister');
+            let mpIndex = 0;
+
+            for (const role of rolesToReshuffle) {
+                if (mpIndex < availableMPsForReshuffle.length) {
+                    const mpInfo = availableMPsForReshuffle[mpIndex];
+                    reshuffledCabinet[role] = `${mpInfo.name} (${mpInfo.party})`;
+                    assignedMPs.add(mpInfo.name);
+                    mpIndex++;
+                } else {
+                    // Fallback if we run out of specific MPs from the ruling party
+                    reshuffledCabinet[role] = `Another MP from ${pmParty}`;
+                }
+            }
+            return reshuffledCabinet;
+        }
+
+        /**
+         * Handles the "Betray Prime Minister" action.
+         */
+        function handleBetrayal() {
+            const year = currentElectionYear;
+            let originalPmName = '';
+            let challengerName = '';
+            let challengerParty = '';
+            let successMessage = '';
+            const failureQuote = "You idiot. You naive, foolish, irresponsible nincompoop.";
+            let newsHeadline = '';
+            let newsDescription = '';
+
+            if (year === '2005') {
+                originalPmName = 'Tony Blair';
+                challengerName = 'Gordon Brown';
+                challengerParty = 'Labour';
+                successMessage = `Gordon Brown has successfully betrayed Tony Blair and is now Prime Minister!`;
+            } else if (year === '1987') {
+                originalPmName = 'Margaret Thatcher';
+                challengerName = 'Michael Heseltine';
+                challengerParty = 'Conservative';
+                successMessage = `Michael Heseltine has successfully challenged Margaret Thatcher and is now Prime Minister!`;
+            } else if (year === '1992') { // Added 1992 betrayal logic
+                originalPmName = 'John Major';
+                challengerName = 'John Redwood';
+                challengerParty = 'Conservative';
+                successMessage = `John Redwood has successfully challenged John Major and is now Prime Minister!`;
+            }
+            else {
+                // This button should be hidden for other years, but as a safeguard
+                showMessage("Betrayal feature is only available for 1987, 1992, and 2005 elections.");
+                return;
+            }
+
+            const chance = Math.random(); // 0 to 1
+            const success = chance < 0.5; // 50/50 chance
+
+            if (success) {
+                currentCustomCabinet = generateReshuffledCabinet(year, challengerName, challengerParty);
+                newsHeadline = `${challengerName} Seizes Power!`;
+                newsDescription = `${challengerName} successfully challenged ${originalPmName} and has been appointed the new Prime Minister. A new era begins!`;
+                showMessage(`Success! ${successMessage}`);
+            } else {
+                let failedCabinet = { ...cabinetData[year] };
+                let challengerRoleFound = false;
+
+                for (const role in failedCabinet) {
+                    if (failedCabinet[role] && failedCabinet[role].includes(challengerName)) {
+                        delete failedCabinet[role];
+                        challengerRoleFound = true;
+                        break;
+                    }
+                }
+                currentCustomCabinet = failedCabinet;
+                newsHeadline = `${challengerName}'s Bid Fails!`;
+                newsDescription = `${challengerName}'s attempt to oust ${originalPmName} has failed. ${challengerName} has lost their cabinet position.`;
+                showMessage(`Failure! ${challengerName}'s attempt to betray the Prime Minister failed. They lost their cabinet role. ${failureQuote}`);
+            }
+
+            // Add betrayal news to the current week's news feed
+            addDynamicNews(currentElectionYear, currentNewsWeek, {
+                headline: newsHeadline,
+                description: newsDescription,
+                pmAction: `The political landscape shifts dramatically.`
+            });
+            updateCabinetDisplay(year);
+        }
+
+        /**
+         * Updates the Cabinet section display based on the selected year.
+         * @param {string} year - The selected election year.
+         */
+        function updateCabinetDisplay(year) {
+            let cabinetToDisplay;
+
+            // If a custom cabinet is set (from reshuffle or betrayal), use it.
+            // Otherwise, use the original historical data.
+            if (currentCustomCabinet && currentElectionYear === year) {
+                cabinetToDisplay = currentCustomCabinet;
+            } else {
+                cabinetToDisplay = cabinetData[year];
+                currentCustomCabinet = null; // Clear custom cabinet if switching years or back to original
+            }
+
+            cabinetList.innerHTML = ''; // Clear previous content
+
+            // Show/hide the main cabinet section and reshuffle/betray buttons
+            if (year === '2010' || !cabinetData[year]) { // No historical cabinet for 2010, or no data
+                cabinetSection.classList.add('hidden');
+                reshuffleCabinetToggleButton.classList.add('hidden');
+                betrayPmButton.classList.add('hidden'); // Hide betray button
+                return;
+            } else {
+                cabinetSection.classList.remove('hidden');
+                reshuffleCabinetToggleButton.classList.remove('hidden'); // Show reshuffle button for historical years
+
+                // Show betray button only for 1987, 1992, and 2005
+                if (year === '1987' || year === '2005' || year === '1992') {
+                    betrayPmButton.classList.remove('hidden');
+                } else {
+                    betrayPmButton.classList.add('hidden');
+                }
+            }
+
+            for (const position in cabinetToDisplay) {
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between p-2 border border-gray-400 rounded-md bg-gray-200';
+                div.innerHTML = `
+                    <span class="font-bold">${position}:</span>
+                    <span>${cabinetToDisplay[position]}</span>
+                `;
+                cabinetList.appendChild(div);
+            }
+        }
+
+        /**
+         * Updates the Legislation tab content based on the selected year.
+         * @param {string} year - The selected election year.
+         */
+        function updateLegislationTab(year) {
+            const legislation = legislationData[year];
+            legislationContentDiv.innerHTML = ''; // Clear previous content
+            legislationActionsDiv.classList.add('hidden'); // Hide actions by default
+
+            if (year === '2010' || !legislation) {
+                legislationContentDiv.innerHTML = '<p class="text-gray-600">Select a historical election year (1987-2005) to view legislation challenges.</p>';
+                document.getElementById('legislation-intro-text').textContent = "Explore key legislative issues and propose a stance. Will your cabinet agree?";
+                return;
+            }
+
+            document.getElementById('legislation-intro-text').textContent = "As Prime Minister, how will you deal with this key legislation?";
+
+            const div = document.createElement('div');
+            div.className = 'mb-4';
+            div.innerHTML = `
+                <h3 class="text-lg font-bold mb-2">${legislation.issue}</h3>
+                <p class="mb-2">${legislation.description}</p>
+                <p class="text-sm text-gray-700">Expected Outcome: ${legislation.expectedOutcome}</p>
+            `;
+            legislationContentDiv.appendChild(div);
+
+            // Update stance buttons
+            legislationStanceButtons.forEach(button => {
+                const stance = button.dataset.stance;
+                if (legislation.stanceOptions.includes(stance)) {
+                    button.classList.remove('hidden');
+                } else {
+                    button.classList.add('hidden');
+                }
+                button.classList.remove('active-stance'); // Reset active state
+            });
+
+            // Set a default stance and mark it active
+            if (legislation.stanceOptions.length > 0) {
+                const defaultStance = legislation.stanceOptions[0]; // Take the first available stance as default
+                const defaultButton = document.querySelector(`.legislation-stance-button[data-stance="${defaultStance}"]`);
+                if (defaultButton) {
+                    defaultButton.classList.add('active-stance');
+                    selectedLegislationStance = defaultStance;
+                }
+            } else {
+                selectedLegislationStance = ''; // No stances available
+            }
+
+            legislationActionsDiv.classList.remove('hidden'); // Show actions
+        }
+
+        /**
+         * Handles proposing a stance on legislation to the cabinet.
+         */
+        function handleProposeStance() {
+            if (!selectedLegislationStance) {
+                showMessage("Please select a stance before proposing to the cabinet.");
+                return;
+            }
+
+            const success = Math.random() < 0.5; // 50/50 chance
+            let message = '';
+            let newsHeadline = '';
+            let newsDescription = '';
+
+            if (success) {
+                message = `Your cabinet has agreed with your stance to "${selectedLegislationStance}" on the legislation! This shows strong leadership.`;
+                newsHeadline = `Cabinet Agrees on ${legislationData[currentElectionYear].issue}`;
+                newsDescription = `The Prime Minister's proposed stance to "${selectedLegislationStance}" on the ${legislationData[currentElectionYear].issue} has received full cabinet backing.`;
+            } else {
+                message = `Your cabinet has disagreed with your stance to "${selectedLegislationStance}" on the legislation. This could signal a cabinet split or challenge to your authority.`;
+                newsHeadline = `Cabinet Divided on ${legislationData[currentElectionYear].issue}`;
+                newsDescription = `The Prime Minister's stance to "${selectedLegislationStance}" on the ${legislationData[currentElectionYear].issue} has faced significant opposition within the cabinet.`;
+            }
+            showMessage(message);
+
+            // Add legislation news to the current week's news feed
+            addDynamicNews(currentElectionYear, currentNewsWeek, {
+                headline: newsHeadline,
+                description: newsDescription,
+                pmAction: `The Prime Minister pushed for their stance, leading to ${success ? 'agreement' : 'disagreement'} within the cabinet.`
+            });
+        }
+
+        /**
+         * Adds a dynamic news item to the specified year and week.
+         * If the week doesn't exist, it creates it.
+         * @param {string} year - The election year.
+         * @param {number} weekIndex - The 0-indexed week number.
+         * @param {object} newsItem - The news item to add.
+         */
+        function addDynamicNews(year, weekIndex, newsItem) {
+            if (!dynamicNewsFeedData[year]) {
+                dynamicNewsFeedData[year] = [];
+            }
+            // Ensure the week array exists up to the current weekIndex
+            while (dynamicNewsFeedData[year].length <= weekIndex) {
+                dynamicNewsFeedData[year].push([]); // Add empty week arrays
+            }
+            dynamicNewsFeedData[year][weekIndex].push(newsItem);
+            updateNewsFeedTab(year); // Refresh the news feed display
+        }
+
+        /**
+         * Updates the News Feed tab content based on the selected year and current week.
+         * @param {string} year - The selected election year.
+         */
+        function updateNewsFeedTab(year) {
+            const yearNews = dynamicNewsFeedData[year];
+            newsfeedContentDiv.innerHTML = ''; // Clear previous content
+
+            if (year === '2010' || !yearNews || yearNews.length === 0) {
+                newsfeedContentDiv.innerHTML = '<p class="text-gray-600">Select a historical election year (1987-2005) to view news headlines.</p>';
+                document.getElementById('newsfeed-intro-text').textContent = "Catch up on the major headlines and governmental actions of the time.";
+                newsfeedWeekNavigation.classList.add('hidden');
+                return;
+            }
+
+            document.getElementById('newsfeed-intro-text').textContent = "Here are some of the biggest issues and the Prime Minister's actions:";
+            newsfeedWeekNavigation.classList.remove('hidden');
+
+            // Ensure currentNewsWeek is within bounds
+            if (currentNewsWeek >= yearNews.length) {
+                currentNewsWeek = yearNews.length - 1; // Go to last available week if somehow out of bounds
+            }
+            if (currentNewsWeek < 0) {
+                currentNewsWeek = 0; // Ensure it's not negative
+            }
+
+            const newsForCurrentWeek = yearNews[currentNewsWeek];
+
+            if (newsForCurrentWeek && newsForCurrentWeek.length > 0) {
+                newsForCurrentWeek.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'mb-4 p-3 border border-gray-300 rounded-md bg-gray-100';
+                    div.innerHTML = `
+                        <h3 class="text-lg font-bold mb-1">${item.headline}</h3>
+                        <p class="mb-2">${item.description}</p>
+                        <p class="font-semibold">PM's Action: <span class="font-normal">${item.pmAction}</span></p>
+                    `;
+                    newsfeedContentDiv.appendChild(div);
+                });
+            } else {
+                newsfeedContentDiv.innerHTML = '<p class="text-gray-600">No major news events this week.</p>';
+            }
+
+            // Update week display and button states
+            currentWeekDisplay.textContent = `Week ${currentNewsWeek + 1} / ${yearNews.length}`;
+            prevWeekBtn.disabled = currentNewsWeek === 0;
+            nextWeekBtn.disabled = currentNewsWeek >= yearNews.length - 1;
+        }
+
+        /**
+         * Navigates the news feed to the next or previous week.
+         * @param {number} direction - 1 for next week, -1 for previous week.
+         */
+        function navigateNewsWeek(direction) {
+            const yearNews = dynamicNewsFeedData[currentElectionYear];
+            if (!yearNews) return;
+
+            const newWeek = currentNewsWeek + direction;
+            if (newWeek >= 0 && newWeek < yearNews.length) {
+                currentNewsWeek = newWeek;
+            } else if (newWeek >= yearNews.length) {
+                // If trying to go past the last week, create a new empty week
+                dynamicNewsFeedData[currentElectionYear].push([]);
+                currentNewsWeek = newWeek;
+            }
+            updateNewsFeedTab(currentElectionYear);
+        }
+
+
+        // Event Listeners
+        historicalSelect.addEventListener('change', (e) => {
+            initializeVoteshareInputs(e.target.value);
+            declaredResults = [];
+            updateDeclaredScoreboard();
+            updateCabinetDisplay(e.target.value);
+            currentNewsWeek = 0; // Reset news week on year change
+            updateNewsFeedTab(e.target.value);
+        });
+
+        reshuffleCabinetToggleButton.addEventListener('click', () => {
+            currentCustomCabinet = generateReshuffledCabinet(currentElectionYear);
+            updateCabinetDisplay(currentElectionYear);
+            // Add reshuffle news item
+            addDynamicNews(currentElectionYear, currentNewsWeek, {
+                headline: `Cabinet Reshuffled!`,
+                description: `The Prime Minister has announced a significant reshuffle of the cabinet. New faces and new roles are expected to bring fresh energy.`,
+                pmAction: `The Prime Minister exercised their prerogative to refresh the government team.`
+            });
+        });
+
+        // Tab switching logic
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                button.classList.add('active');
+                document.getElementById(`tab-content-${button.dataset.tab}`).classList.add('active');
+
+                // If switching to news feed, ensure it's updated for the current year/week
+                if (button.dataset.tab === 'newsfeed') {
+                    updateNewsFeedTab(currentElectionYear);
+                }
+            });
+        });
+
+        // Legislation stance button click handler
+        legislationStanceButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                legislationStanceButtons.forEach(btn => btn.classList.remove('active-stance'));
+                button.classList.add('active-stance');
+                selectedLegislationStance = button.dataset.stance;
+            });
+        });
+
+        proposeStanceBtn.addEventListener('click', handleProposeStance);
+
+        // News feed navigation buttons
+        prevWeekBtn.addEventListener('click', () => navigateNewsWeek(-1));
+        nextWeekBtn.addEventListener('click', () => navigateNewsWeek(1));
+
+
+        // Add the new betray PM button to the HTML and attach event listener
+        document.addEventListener('DOMContentLoaded', () => {
+            const cabinetSectionElement = document.getElementById('cabinet-section');
+            const reshuffleButtonExists = document.getElementById('reshuffle-cabinet-toggle-button');
+
+            if (cabinetSectionElement && reshuffleButtonExists) {
+                const betrayButtonHtml = `<button id="betray-pm-button" class="button-win7 mb-4 hidden">Betray Prime Minister</button>`;
+                reshuffleButtonExists.insertAdjacentHTML('afterend', betrayButtonHtml);
+                betrayPmButton = document.getElementById('betray-pm-button'); // Assign to global variable
+                if (betrayPmButton) {
+                    betrayPmButton.addEventListener('click', handleBetrayal);
+                }
+            }
+
+            // Pad the news feed data for all years before initial load
+            padNewsFeedData();
+
+            initializeVoteshareInputs('2010'); // Load 2010 data by default
+            updateDeclaredScoreboard(); // Initialize empty scoreboard
+            updateMPsAtRisk('2010'); // Load MPs at risk for 2010 by default
+            updateCabinetDisplay('2010'); // Initialize cabinet display (hidden for 2010)
+            updateLegislationTab('2010'); // Initialize legislation tab (empty for 2010)
+            updateNewsFeedTab('2010'); // Initialize news feed tab (empty for 2010)
+        });
+
+
+        addDeclarationBtn.addEventListener('click', addDeclaration);
+        clearDeclarationsBtn.addEventListener('click', clearAllDeclarations);
+
+    </script>
+</body>
+</html>
